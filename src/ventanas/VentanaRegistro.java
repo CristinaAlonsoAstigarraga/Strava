@@ -52,7 +52,7 @@ public class VentanaRegistro {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 675, 350S);
+		frame.setBounds(150, 150, 675, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		

@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
@@ -15,6 +17,7 @@ public class VentanaLogIn {
 	private JFrame frame;
 	private JTextField textFieldUsuario;
 	private JTextField textFieldContrasenya;
+	private JPasswordField txtContrasenia;
 
 	/**
 	 * Launch the application.
@@ -89,7 +92,7 @@ public class VentanaLogIn {
 		JLabel lblContrasenya = new JLabel("CONTRASEÑA:");
 		panelCentro.add(lblContrasenya);
 		
-		textFieldContrasenya = new JTextField();
+		textFieldContrasenya = new JPasswordField();
 		panelCentro.add(textFieldContrasenya);
 		textFieldContrasenya.setColumns(10);
 	}

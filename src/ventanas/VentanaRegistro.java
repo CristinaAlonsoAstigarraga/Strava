@@ -95,7 +95,7 @@ public class VentanaRegistro {
 		panelCentro.add(textFieldAltura);
 		textFieldAltura.setColumns(10);
 		
-		JLabel lblFCM = new JLabel("FRECUENCIA CARDIACA MÁXIMA:");
+		JLabel lblFCM = new JLabel("FRECUENCIA CARDIACA MAXIMA:");
 		panelCentro.add(lblFCM);
 		
 		textFieldFCM = new JTextField();

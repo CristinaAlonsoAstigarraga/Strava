@@ -12,7 +12,7 @@ public class SesionEntrenamientoController {
 
 	private ServiceLocator serviceLocator;
 	
-	public List<SesionEntrenamientoDTO> getSesiones(long token){	//No está en el diagrama
+	public List<SesionEntrenamientoDTO> getSesiones(long token){
 		try {
 			return this.serviceLocator.getService().getSesiones(token);
 		} catch (RemoteException e) {

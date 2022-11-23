@@ -5,7 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import remote.IFachadaRemota;
+//import remote.IFachadaRemota;
 
 public class ServiceLocator {
 	

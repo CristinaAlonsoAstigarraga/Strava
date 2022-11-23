@@ -1,7 +1,9 @@
 package remote;
 
+import remote.IFachadaRemota;
+
 public class ServiceLocator {
 	
-	//private IFachadaRemota service;
+	private IFachadaRemota service;
 
 }

@@ -104,3 +104,64 @@ public class VentanaObtenerRetosActivos2 extends JFrame {
 	}
 
 }
+
+
+
+
+
+
+/*		
+JPanel panelCentro = new JPanel();
+contentPane.add(panelCentro, BorderLayout.CENTER);
+
+
+JLabel lblNombreRetos = new JLabel("NOMBRE RETO:");
+panelCentro.add(lblNombreRetos);
+
+JComboBox comboBoxRetosAcitvos = new JComboBox();
+panelCentro.add(comboBoxRetosAcitvos);
+
+
+modelo = new DefaultTableModel();
+tablaRetosActivos = new JTable(modelo);
+
+modelo.addColumn("Usuario");
+modelo.addColumn("Nombre");
+modelo.addColumn("Fecha Ini");
+modelo.addColumn("Fecha Fin");
+modelo.addColumn("Distancia");
+modelo.addColumn("Tiempo Objetivo");
+modelo.addColumn("Deporte");
+modelo.addColumn("Codigo");
+
+scrollTabla = new JScrollPane(tablaRetosActivos);
+scrollTabla.setVisible(true);
+
+panelCentro.add(tablaRetosActivos);
+}
+
+
+public void cargarTablaRetosActivos(StravaAppService stravaService) {
+tablaRetosActivos.removeAll();
+try {
+	List<RetoDTO> listaRetosDTO = stravaService.obtenerRetosActivos();
+
+	for (int i = 0; i < listaRetosDTO.size(); i++) {
+		//columna[0] = listaRetosDTO.get(i).getUsuario();
+		columna[1] = listaRetosDTO.get(i).getNombre();
+		columna[2] = listaRetosDTO.get(i).getFechaIni();
+		columna[3] = listaRetosDTO.get(i).getFechaFin();
+		columna[4] = listaRetosDTO.get(i).getDistancia();
+		columna[5] = listaRetosDTO.get(i).getTiempoObjetivo();
+		columna[6] = listaRetosDTO.get(i).getCodigo();
+		columna[7] = listaRetosDTO.get(i).getCodigo();
+		
+		modelo.addRow(columna);// agregamos una fila a nuestro modelo de tabla
+	}
+} catch (Exception e) {
+	System.out.println("No se puede rellenar la tabla");
+	e.printStackTrace();
+}
+
+}
+*/

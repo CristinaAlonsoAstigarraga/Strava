@@ -1,21 +1,19 @@
-package ventanas;
+package ventanasBien;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JButton;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
-import javax.swing.JTextArea;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
+import javax.swing.border.EmptyBorder;
 
-public class VentanaRegistro {
+public class VentanaRegistro2 extends JFrame {
 
-	private JFrame frame;
+	private JPanel contentPane;
 	private JTextField textFieldNombre;
 	private JTextField textFieldEmail;
 	private JTextField textFieldFechaNac;
@@ -31,8 +29,8 @@ public class VentanaRegistro {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRegistro window = new VentanaRegistro();
-					window.frame.setVisible(true);
+					VentanaRegistro2 frame = new VentanaRegistro2();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,23 +39,21 @@ public class VentanaRegistro {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public VentanaRegistro() {
-		initialize();
-	}
+	public VentanaRegistro2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 475, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(150, 150, 675, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JLabel lblRegistro = new JLabel("REGISTRO");
+		contentPane.add(lblRegistro);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro);
+		contentPane.add(panelCentro);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblEmail = new JLabel("EMAIL: ");
@@ -110,28 +106,25 @@ public class VentanaRegistro {
 		textFieldFCR.setColumns(10);
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
-		
-		JLabel lblRegistro = new JLabel("REGISTRO");
-		panelNorte.add(lblRegistro);
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		panelSur.add(btnRegistrar);
 		
-		JButton btnRegistroGoogle = new JButton("REGISTRAR CON GOOGLE");
+		JButton btnRegistroGoogle = new JButton("REGISTRO GOOGLE");
 		panelSur.add(btnRegistroGoogle);
 		
-		JButton btnRegistroFB = new JButton("REGISTRAR CON FACEBOOK");
+		JButton btnRegistroFB = new JButton("REGISTRO FACEBOOK");
 		panelSur.add(btnRegistroFB);
 		
 		JPanel panelOeste = new JPanel();
-		frame.getContentPane().add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.WEST);
 		
 		JPanel panelEste = new JPanel();
-		frame.getContentPane().add(panelEste, BorderLayout.EAST);
+		contentPane.add(panelEste, BorderLayout.EAST);
 	}
 
 }

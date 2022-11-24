@@ -1,22 +1,24 @@
-package ventanas;
+package ventanasBien;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.JTextField;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class VentanaConsultaEstadoRetos {
+public class VentanaConsultaEstadoRetos2 extends JFrame {
 
-	private JFrame frame;
+	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
 
@@ -27,8 +29,8 @@ public class VentanaConsultaEstadoRetos {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaConsultaEstadoRetos window = new VentanaConsultaEstadoRetos();
-					window.frame.setVisible(true);
+					VentanaConsultaEstadoRetos2 frame = new VentanaConsultaEstadoRetos2();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,37 +39,45 @@ public class VentanaConsultaEstadoRetos {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public VentanaConsultaEstadoRetos() {
-		initialize();
-	}
+	public VentanaConsultaEstadoRetos2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 650, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(150, 150, 675, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(contentPane);
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				vmp.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnVolver);
 		
 		JLabel lblTitulo = new JLabel("CONSULTAR ESTADOS RETOS ACEPTADOS");
 		panelNorte.add(lblTitulo);
 		
 		JButton btnLogOut = new JButton("LOG OUT");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnLogOut);
 		
 		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JPanel panelOeste = new JPanel();
-		frame.getContentPane().add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.WEST);
 		
 		JLabel lblFecha = new JLabel("FECHA:");
 		panelOeste.add(lblFecha);
@@ -77,10 +87,10 @@ public class VentanaConsultaEstadoRetos {
 		panelOeste.add(textField);
 		
 		JPanel panelEste = new JPanel();
-		frame.getContentPane().add(panelEste, BorderLayout.EAST);
+		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		table = new JTable();

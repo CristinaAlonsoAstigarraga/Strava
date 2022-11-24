@@ -1,23 +1,20 @@
-package ventanas;
+package ventanasBien;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.SpringLayout;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
-public class VentanaInicio extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class VentanaInicio2 extends JFrame {
 
 	private JPanel contentPane;
 
@@ -28,7 +25,7 @@ public class VentanaInicio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio frame = new VentanaInicio();
+					VentanaInicio2 frame = new VentanaInicio2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +37,7 @@ public class VentanaInicio extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInicio() {
+	public VentanaInicio2() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -48,6 +45,9 @@ public class VentanaInicio extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		VentanaLogIn2 vli = new VentanaLogIn2();
+		VentanaRegistro2 vr = new VentanaRegistro2();
 		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
@@ -58,6 +58,11 @@ public class VentanaInicio extends JFrame {
 		panelNorte.add(lblInicioStrava_1);
 		
 		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnLogOut);
 		
 		JPanel panelCentro = new JPanel();
@@ -65,9 +70,21 @@ public class VentanaInicio extends JFrame {
 		panelCentro.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		JButton btnIniciarSesion = new JButton("Iniciar sesion");
+		btnIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vli.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelCentro.add(btnIniciarSesion);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vr.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelCentro.add(btnRegistrarse);
 	}
 

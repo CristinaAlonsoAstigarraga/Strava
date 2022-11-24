@@ -1,24 +1,28 @@
-package ventanas;
+package ventanasBien;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class VentanaCreacionReto {
+public class VentanaCreacionReto2 extends JFrame {
 
-	private JFrame frame;
+	private JPanel contentPane;
 	private JTextField textFieldNombre;
 	private JTextField textFieldFechaIni;
 	private JTextField textFieldFechaFin;
 	private JTextField textFieldDistancia;
 	private JTextField textFieldTiempoObjetivo;
+
 
 	/**
 	 * Launch the application.
@@ -27,8 +31,8 @@ public class VentanaCreacionReto {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCreacionReto window = new VentanaCreacionReto();
-					window.frame.setVisible(true);
+					VentanaCreacionReto2 frame = new VentanaCreacionReto2();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,46 +41,54 @@ public class VentanaCreacionReto {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public VentanaCreacionReto() {
-		initialize();
-	}
+	public VentanaCreacionReto2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 650, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(contentPane);
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				vmp.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnVolver);
 		
 		JLabel lblTitulo = new JLabel("CREACIÓN DE UN RETO");
 		panelNorte.add(lblTitulo);
 		
 		JButton btnLogOut = new JButton("LOG OUT");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnLogOut);
 		
 		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnCrear = new JButton("CREAR");
 		panelSur.add(btnCrear);
 		
 		JPanel panelOeste = new JPanel();
-		frame.getContentPane().add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.WEST);
 		
 		JPanel panelEste = new JPanel();
-		frame.getContentPane().add(panelEste, BorderLayout.EAST);
+		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblNombre = new JLabel("NOMBRE: ");

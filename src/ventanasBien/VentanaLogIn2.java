@@ -1,20 +1,22 @@
-package ventanas;
-
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+package ventanasBien;
 
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class VentanaLogIn {
+public class VentanaLogIn2 extends JFrame {
 
-	private JFrame frame;
+	private JPanel contentPane;
 	private JTextField textFieldUsuario;
 	private JTextField textFieldContrasenya;
 	private JPasswordField txtContrasenia;
@@ -26,8 +28,8 @@ public class VentanaLogIn {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaLogIn window = new VentanaLogIn();
-					window.frame.setVisible(true);
+					VentanaLogIn2 frame = new VentanaLogIn2();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,28 +38,26 @@ public class VentanaLogIn {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public VentanaLogIn() {
-		initialize();
-	}
+	public VentanaLogIn2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 300, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(contentPane);
+		
+		VentanaRegistro2 vr = new VentanaRegistro2();
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblLogIn = new JLabel("LOG IN");
 		panelNorte.add(lblLogIn);
 		
 		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new GridLayout(0, 1, 0, 10));
 		
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
@@ -70,16 +70,22 @@ public class VentanaLogIn {
 		panelSur.add(btnISFaceBook);
 		
 		JButton btnRegistro = new JButton("REGISTRAR");
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vr.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelSur.add(btnRegistro);
 		
 		JPanel panelOeste = new JPanel();
-		frame.getContentPane().add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.WEST);
 		
 		JPanel panelEste = new JPanel();
-		frame.getContentPane().add(panelEste, BorderLayout.EAST);
+		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 0, 0, 10));
 		
 		JLabel lblUsuario = new JLabel("USUARIO:");

@@ -1,20 +1,22 @@
-package ventanas;
+package ventanasBien;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class VentanaAceptacionReto {
+public class VentanaAceptacionReto2 extends JFrame {
 
-	private JFrame frame;
+	private JPanel contentPane;
 	private JTable tableRetos;
 
 	/**
@@ -24,8 +26,8 @@ public class VentanaAceptacionReto {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAceptacionReto window = new VentanaAceptacionReto();
-					window.frame.setVisible(true);
+					VentanaAceptacionReto2 frame = new VentanaAceptacionReto2();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -34,40 +36,48 @@ public class VentanaAceptacionReto {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public VentanaAceptacionReto() {
-		initialize();
-	}
+	public VentanaAceptacionReto2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 350, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(contentPane);
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				vmp.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnVolver);
 		
 		JLabel lblTitulo = new JLabel("ACEPTAR UN RETO");
 		panelNorte.add(lblTitulo);
 		
 		JButton btnLogOut = new JButton("LOG OUT");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panelNorte.add(btnLogOut);
 		
 		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAceptar = new JButton("ACEPTAR:");
 		panelSur.add(btnAceptar);
 		
 		JPanel panelOeste = new JPanel();
-		frame.getContentPane().add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.WEST);
 		
 		JLabel lblDeporte = new JLabel("DEPORTE:");
 		panelOeste.add(lblDeporte);
@@ -76,10 +86,10 @@ public class VentanaAceptacionReto {
 		panelOeste.add(comboBoxDeporte);
 		
 		JPanel panelEste = new JPanel();
-		frame.getContentPane().add(panelEste, BorderLayout.EAST);
+		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		contentPane.add(panelCentro, BorderLayout.CENTER);
 		
 		tableRetos = new JTable();
 		tableRetos.setModel(new DefaultTableModel(

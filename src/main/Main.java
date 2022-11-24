@@ -17,6 +17,7 @@ public class Main {
 		RetoController retoController = new RetoController(serviceLocator);
 		SesionEntrenamientoController sesionEntrenamientoController = new SesionEntrenamientoController(serviceLocator);
 		UsuarioController usuarioController = new UsuarioController(serviceLocator);
+		
 	}
 
 }

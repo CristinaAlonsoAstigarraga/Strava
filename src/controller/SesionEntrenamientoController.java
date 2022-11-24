@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.security.Provider.Service;
 import java.util.List;
 
-import clases.SesionEntrenamiento;
+//import clases.SesionEntrenamiento;
 import dto.SesionEntrenamientoDTO;
 import remote.ServiceLocator;
 
@@ -25,12 +25,12 @@ public class SesionEntrenamientoController {
 		}
 	}
 	
-	public SesionEntrenamiento crearSesionEntrenamiento(long token, SesionEntrenamientoDTO nuevaSesion) {
-		try {
-			return this.serviceLocator.getService().crearSesionEntrenamiento(token, nuevaSesion);
-		} catch (RemoteException e) {
-			System.out.println("# Error creando la sesión de entrenamiento: " + e);
-			return null;
-		}
-	}
+//	public SesionEntrenamiento crearSesionEntrenamiento(long token, SesionEntrenamientoDTO nuevaSesion) {
+//		try {
+//			return this.serviceLocator.getService().crearSesionEntrenamiento(token, nuevaSesion);
+//		} catch (RemoteException e) {
+//			System.out.println("# Error creando la sesión de entrenamiento: " + e);
+//			return null;
+//		}
+//	}
 }

@@ -12,6 +12,10 @@ public class SesionEntrenamientoController {
 
 	private ServiceLocator serviceLocator;
 	
+	public SesionEntrenamientoController(ServiceLocator serviceLocator) {
+		this.serviceLocator = serviceLocator;
+	}
+	
 	public List<SesionEntrenamientoDTO> getSesiones(long token){
 		try {
 			return this.serviceLocator.getService().getSesiones(token);

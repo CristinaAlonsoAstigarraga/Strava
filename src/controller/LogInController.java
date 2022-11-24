@@ -12,11 +12,9 @@ public class LogInController {
 	//si el login no se hace bien se genera un token con -1 (numero no valido para token)
 	private long token = -1; 
 	
-	//me da error si no lo pongo void
-	/*public LoginController(ServiceLocator serviceLocator) {
+	public LogInController(ServiceLocator serviceLocator) {
 		this.serviceLocator = serviceLocator;
 	}
-	*/
 	public boolean login(UsuarioLocalDTO usuario) {
 		try {
 			this.token = this.serviceLocator.getService().login(usuario);			

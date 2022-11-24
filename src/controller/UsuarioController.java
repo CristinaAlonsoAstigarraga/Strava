@@ -9,6 +9,10 @@ public class UsuarioController {
 
 	private ServiceLocator serviceLocator;
 	
+	public UsuarioController(ServiceLocator serviceLocator) {
+		this.serviceLocator = serviceLocator;
+	}
+	
 	public long registro(UsuarioLocalDTO usuario) {
 		try {
 			return this.serviceLocator.getService().registro(usuario);

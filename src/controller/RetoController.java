@@ -5,6 +5,7 @@ import remote.ServiceLocator;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import clases.Reto;
 //import clases.Reto;
 import dto.RetoDTO;
 import remote.IFachadaRemota;
@@ -27,16 +28,16 @@ public class RetoController {
 			return null;
 		}
 		
-	}
+	}	
 	
-//	public RetoDTO crearReto(long token, RetoDTO nuevoReto) {
-//		try {
-//			return this.serviceLocator.getService().crearReto(token, nuevoReto);
-//		} catch (RemoteException e) {
-//			System.out.println("# Error creando el reto: " + e);
-//			return null;
-//		}
-//	}
+	public Reto crearReto(long token, RetoDTO nuevoReto) {
+		try {
+			return this.serviceLocator.getService().crearReto(token, nuevoReto);
+		} catch (RemoteException e) {
+			System.out.println("# Error creando el reto: " + e);
+			return null;
+		}
+	}
 
 	public List<RetoDTO> obtenerRetosActivos(long token){
 		try {

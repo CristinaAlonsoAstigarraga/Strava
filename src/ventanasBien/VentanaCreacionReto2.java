@@ -8,10 +8,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import clases.Deporte;
+import controller.RetoController;
+import dto.DeporteDTO;
+import dto.RetoDTO;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class VentanaCreacionReto2 extends JFrame {
@@ -22,6 +32,9 @@ public class VentanaCreacionReto2 extends JFrame {
 	private JTextField textFieldFechaFin;
 	private JTextField textFieldDistancia;
 	private JTextField textFieldTiempoObjetivo;
+	private RetoController controller;
+	private JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+	List<RetoDTO> listaRetosCreados = new ArrayList<RetoDTO>();
 
 
 	/**
@@ -76,10 +89,57 @@ public class VentanaCreacionReto2 extends JFrame {
 		panelNorte.add(btnLogOut);
 		
 		JPanel panelSur = new JPanel();
-		contentPane.add(panelSur, BorderLayout.SOUTH);
+		contentPane.add(panelSur, BorderLayout.SOUTH);	
 		
 		JButton btnCrear = new JButton("CREAR");
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String erFechas = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+//				String erDistancia = "[0-9]{3}.[0-9]{2}";
+				RetoDTO reto = new RetoDTO();
+				//controller.crearReto(0, reto);	//En vez de 0, getToken
+				
+				reto.setNombre(textFieldNombre.getText());
+				boolean fechaCrrecta = Pattern.matches(erFechas, textFieldFechaIni.getText());
+				if(!fechaCrrecta) {
+					JOptionPane.showMessageDialog(null,  "La fecha de inicio no tiene un formato correcto", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					reto.setFechaIni(textFieldFechaIni.getText());
+				}
+				if(!fechaCrrecta) {
+					JOptionPane.showMessageDialog(null,  "La fecha de fin no tiene un formato correcto", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					reto.setFechaFin(textFieldFechaFin.getText());
+				}
+				reto.setDistancia(Float.parseFloat(textFieldDistancia.getText()));
+				reto.setTiempoObjetivo(Float.parseFloat(textFieldTiempoObjetivo.getText()));
+				reto.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
+				JOptionPane.showMessageDialog(null,  "RETO CREADO CORRECTAMENTE", "RETO CREADO", JOptionPane.INFORMATION_MESSAGE);
+				
+				textFieldNombre.setText("");
+				textFieldFechaIni.setText("");
+				textFieldFechaFin.setText("");
+				textFieldDistancia.setText("");
+				textFieldTiempoObjetivo.setText("");
+				listaRetosCreados.add(reto);
+//				System.out.println(listaRetosCreados);
+			}
+		});
 		panelSur.add(btnCrear);
+		
+		JButton btnRetosCreados = new JButton("VER RETOS CREADOS");
+		btnRetosCreados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String info ="";
+				int contador = 0;
+				for(RetoDTO reto : listaRetosCreados) {
+					contador++;
+					info = info + "Reto "+contador+" ["+reto+"]\n";
+				}
+				JOptionPane.showMessageDialog(null,  "Listado retos creados: \n"+info+"\n", "RETOS CREADOS", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		contentPane.add(btnRetosCreados);
 		
 		JPanel panelOeste = new JPanel();
 		contentPane.add(panelOeste, BorderLayout.WEST);
@@ -129,7 +189,10 @@ public class VentanaCreacionReto2 extends JFrame {
 		JLabel lblDeporte = new JLabel("DEPORTE");
 		panelCentro.add(lblDeporte);
 		
-		JComboBox comboBoxDeporte = new JComboBox();
+		JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+		for(DeporteDTO d : DeporteDTO.values()) {
+			comboBoxDeporte.addItem(d);
+		}
 		panelCentro.add(comboBoxDeporte);
 	}
 

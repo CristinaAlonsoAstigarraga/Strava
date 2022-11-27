@@ -131,6 +131,12 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		panelCentro.add(btnEstadoRetos);
 		
 		JButton btnVerRetos = new JButton("VER RETOS");
+		btnVerRetos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vr2.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btnEstadoRetos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vr2.setVisible(true);

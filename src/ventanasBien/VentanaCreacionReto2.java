@@ -99,6 +99,8 @@ public class VentanaCreacionReto2 extends JFrame {
 				RetoDTO reto = new RetoDTO();
 				//controller.crearReto(0, reto);	//En vez de 0, getToken
 				
+				
+				
 				reto.setNombre(textFieldNombre.getText());
 				boolean fechaCrrecta = Pattern.matches(erFechas, textFieldFechaIni.getText());
 				if(!fechaCrrecta) {

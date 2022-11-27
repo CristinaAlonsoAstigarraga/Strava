@@ -8,10 +8,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import clases.Deporte;
+import dto.DeporteDTO;
+import dto.RetoDTO;
+import dto.SesionEntrenamientoDTO;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class VentanaCreacionManualEntrenamiento2 extends JFrame {
@@ -19,9 +29,11 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldTitulo;
 	private JTextField textFieldDistancia;
-	private JTextField textFieldFechaInicio;
-	private JTextField textFieldFechaFin;
+	private JTextField textFieldFechaHoraInicio;
+//	private JTextField textFieldFechaFin;
 	private JTextField textFieldDuracion;
+	private JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+	List<SesionEntrenamientoDTO> listaSesionesCreadas = new ArrayList<SesionEntrenamientoDTO>();
 
 	/**
 	 * Launch the application.
@@ -74,12 +86,6 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		});
 		panelNorte.add(btnLogOut);
 		
-		JPanel panelSur = new JPanel();
-		contentPane.add(panelSur, BorderLayout.SOUTH);
-		
-		JButton btnCrear = new JButton("CREAR");
-		panelSur.add(btnCrear);
-		
 		JPanel panelOeste = new JPanel();
 		contentPane.add(panelOeste, BorderLayout.WEST);
 		
@@ -100,7 +106,10 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JLabel lblDeporte = new JLabel("DEPORTE");
 		panelCentro.add(lblDeporte);
 		
-		JComboBox comboBoxDeporte = new JComboBox();
+		JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+		for(DeporteDTO d : DeporteDTO.values()) {
+			comboBoxDeporte.addItem(d);
+		}
 		panelCentro.add(comboBoxDeporte);
 		
 		JLabel lblDistancia = new JLabel("DISTANCIA (km):");
@@ -113,23 +122,63 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JLabel lblFechaInicio = new JLabel("FECHA INICIO:");
 		panelCentro.add(lblFechaInicio);
 		
-		textFieldFechaInicio = new JTextField();
-		panelCentro.add(textFieldFechaInicio);
-		textFieldFechaInicio.setColumns(10);
-		
-		JLabel lblFechaFin = new JLabel("FECHA FIN:");
-		panelCentro.add(lblFechaFin);
-		
-		textFieldFechaFin = new JTextField();
-		panelCentro.add(textFieldFechaFin);
-		textFieldFechaFin.setColumns(10);
-		
+		textFieldFechaHoraInicio = new JTextField();
+		panelCentro.add(textFieldFechaHoraInicio);
+		textFieldFechaHoraInicio.setColumns(10);
+
 		JLabel lblDuracion = new JLabel("DURACIÓN:");
 		panelCentro.add(lblDuracion);
 		
 		textFieldDuracion = new JTextField();
 		panelCentro.add(textFieldDuracion);
 		textFieldDuracion.setColumns(10);
+		
+		JPanel panelSur = new JPanel();
+		contentPane.add(panelSur, BorderLayout.SOUTH);
+		
+		JButton btnCrear = new JButton("CREAR");
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String erFechas = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+//				String erDistancia = "[0-9]{3}.[0-9]{2}";
+				SesionEntrenamientoDTO sesion = new SesionEntrenamientoDTO();
+				//controller.crearsesion(0, sesion);	//En vez de 0, getToken
+				
+				sesion.setTitulo(textFieldTitulo.getText());
+				boolean fechaCrrecta = Pattern.matches(erFechas, textFieldFechaHoraInicio.getText());
+				if(!fechaCrrecta) {
+					JOptionPane.showMessageDialog(null,  "La fecha de inicio no tiene un formato correcto", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					sesion.setsFechaYHoraIni(textFieldFechaHoraInicio.getText());
+				}
+				sesion.setDistancia(Float.parseFloat(textFieldDistancia.getText()));
+				sesion.setDuracion(Float.parseFloat(textFieldDuracion.getText()));
+//				sesion.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
+				JOptionPane.showMessageDialog(null,  "SESIÓN CREADA CORRECTAMENTE", "SESIÓN CREADA", JOptionPane.INFORMATION_MESSAGE);
+				
+				textFieldTitulo.setText("");
+				textFieldFechaHoraInicio.setText("");
+				textFieldDistancia.setText("");
+				textFieldDuracion.setText("");
+				listaSesionesCreadas.add(sesion);
+//				System.out.println(listasesionsCreados);
+			}
+		});
+		panelSur.add(btnCrear);
+		
+		JButton btnVerSesiones = new JButton("VER SESIONES CREADAS");
+		btnVerSesiones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String info ="";
+				int contador = 0;
+				for(SesionEntrenamientoDTO sesion : listaSesionesCreadas) {
+					contador++;
+					info = info + "Sesión "+contador+" ["+sesion+"]\n";
+				}
+				JOptionPane.showMessageDialog(null,  "Listado sesiones creadas: \n"+info+"\n", "SESIONES CREADASS", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		panelSur.add(btnVerSesiones);
 	}
 
 }

@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import clases.Deporte;
+//import clases.Deporte;
 import controller.LogInController;
 import controller.RetoController;
 import dto.DeporteDTO;
@@ -30,8 +30,8 @@ import java.awt.event.ActionEvent;
 
 public class VentanaAceptacionReto2 extends JFrame {
 
-	private RetoController controller;
-	private LogInController controllerL;
+	private static RetoController controller;
+	private static LogInController logInController;
 	private JPanel contentPane;
 	private JTable tablaRetos;
 	
@@ -42,7 +42,7 @@ public class VentanaAceptacionReto2 extends JFrame {
 	private String datos[];
 
 	
-	public VentanaAceptacionReto2(RetoController controller) {
+	public VentanaAceptacionReto2(LogInController logInController, RetoController controller) {
 		this.controller = controller;
 	}
 	
@@ -54,7 +54,7 @@ public class VentanaAceptacionReto2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAceptacionReto2 frame = new VentanaAceptacionReto2();
+					VentanaAceptacionReto2 frame = new VentanaAceptacionReto2(logInController, controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,7 +80,7 @@ public class VentanaAceptacionReto2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
 				vmp.setVisible(true);
 				setVisible(false);
 			}
@@ -144,8 +144,8 @@ public class VentanaAceptacionReto2 extends JFrame {
 		//reto0.setUsuario(usuario0);
 		//reto0.setSesionEntrenamiento(sesion0);
 		reto0.setNombre("Gran Fondo");
-		reto0.setFechaIni("13-02-2022");
-		reto0.setFechaFin("21-03-2022");
+		reto0.setSfechaIni("13-02-2022");
+		reto0.setSfechaFin("21-03-2022");
 		reto0.setDistancia(300);
 		reto0.setTiempoObjetivo(90);
 //		reto0.setDeporte(DeporteDTO.CICLISMO);
@@ -155,8 +155,8 @@ public class VentanaAceptacionReto2 extends JFrame {
 		//reto1.setUsuario(usuario1);
 		//reto1.setSesionEntrenamiento(sesion1);
 		reto1.setNombre("Carrera (resistencia)");
-		reto1.setFechaIni("31-05-2022");
-		reto1.setFechaFin("15-06-2022");
+		reto1.setSfechaIni("31-05-2022");
+		reto1.setSfechaFin("15-06-2022");
 		reto1.setDistancia(2);
 		reto1.setTiempoObjetivo(60);
 //		reto1.setDeporte(DeporteDTO.RUNNING);
@@ -168,7 +168,7 @@ public class VentanaAceptacionReto2 extends JFrame {
 		//Llamamos al Array con los retos
 		for (RetoDTO r : retos) {
 //			controller.getRetos(token);
-			Object [] datos= {r.getNombre(), r.getFechaIni(), r.getFechaFin(), Float.toString(r.getDistancia()), Float.toString(r.getTiempoObjetivo()), /*r.getDeporte().toString(),*/ Boolean.toString(r.getEstado())};
+			Object [] datos= {r.getNombre(), r.getSfechaIni(), r.getSfechaFin(), Float.toString(r.getDistancia()), Float.toString(r.getTiempoObjetivo()), /*r.getDeporte().toString(),*/ Boolean.toString(r.getEstado())};
 			modeloTabla.addRow(datos);
 		}
 		

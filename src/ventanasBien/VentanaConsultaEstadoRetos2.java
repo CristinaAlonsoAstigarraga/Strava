@@ -13,6 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controller.LogInController;
+import controller.RetoController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -21,6 +25,8 @@ public class VentanaConsultaEstadoRetos2 extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
+	private static LogInController logInController;
+	private static RetoController controller;
 
 	/**
 	 * Launch the application.
@@ -29,7 +35,7 @@ public class VentanaConsultaEstadoRetos2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaConsultaEstadoRetos2 frame = new VentanaConsultaEstadoRetos2();
+					VentanaConsultaEstadoRetos2 frame = new VentanaConsultaEstadoRetos2(logInController, controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +47,7 @@ public class VentanaConsultaEstadoRetos2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaConsultaEstadoRetos2() {
+	public VentanaConsultaEstadoRetos2(LogInController logIncontroller, RetoController controller) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 300);
 		contentPane = new JPanel();
@@ -55,7 +61,7 @@ public class VentanaConsultaEstadoRetos2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logIncontroller, controller);
 				vmp.setVisible(true);
 				setVisible(false);
 			}

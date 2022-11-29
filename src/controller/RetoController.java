@@ -5,7 +5,7 @@ import remote.ServiceLocator;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import clases.Reto;
+//import clases.Reto;
 //import clases.Reto;
 import dto.RetoDTO;
 import remote.IFachadaRemota;
@@ -21,7 +21,7 @@ public class RetoController {
 	public List<RetoDTO> getRetos(long token){		//No lo hemos puesto en el diagrama, hay que ponerlo?
 
 		try {
-			return this.serviceLocator.getService().getRetos(token);
+			return this.serviceLocator.getService().getRetos();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			System.out.println("# Error obteniendo todos los retos: " + e);
@@ -30,13 +30,13 @@ public class RetoController {
 		
 	}	
 	
-	public Reto crearReto(long token, RetoDTO nuevoReto) {
+	public boolean crearReto(long token, RetoDTO nuevoReto) {
 		try {
 			return this.serviceLocator.getService().crearReto(token, nuevoReto);
 		} catch (RemoteException e) {
 			System.out.println("# Error creando el reto: " + e);
-			return null;
 		}
+		return false;
 	}
 
 	public List<RetoDTO> obtenerRetosActivos(long token){
@@ -48,9 +48,9 @@ public class RetoController {
 		}
 	}
 	
-	public boolean aceptarReto(long token, String nombre) {
+	public boolean aceptarReto(long token, RetoDTO reto) {
 		try {
-			return this.serviceLocator.getService().aceptarReto(token, nombre);
+			return this.serviceLocator.getService().aceptarReto(token, reto);
 		} catch (RemoteException e) {
 			System.out.println("# Error aceptando el reto: " + e);
 			return false;

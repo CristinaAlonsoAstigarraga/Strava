@@ -3,6 +3,7 @@ package controller;
 import java.rmi.RemoteException;
 
 import dto.UsuarioLocalDTO;
+import dto.UsuarioTipoDTO;
 import remote.ServiceLocator;
 
 public class UsuarioController {
@@ -13,12 +14,36 @@ public class UsuarioController {
 		this.serviceLocator = serviceLocator;
 	}
 	
-	public long registro(UsuarioLocalDTO usuario) {
+	public boolean registrarLocal(String nombre, String email, String contrasena, String fechaNac, double peso, 
+			double altura, double fcm, double fcr, UsuarioTipoDTO usuarioTipo) {
 		try {
-			return this.serviceLocator.getService().registro(usuario);
+			this.serviceLocator.getService().registrarLocal(nombre, email, contrasena, fechaNac, peso, altura, fcm, fcr, usuarioTipo);
+			return true;
 		} catch (RemoteException e) {
 			System.out.println("# Error en el registro: " + e);
-			return 0;		//Qué tiene que devolver?
+			return false;		//Qué tiene que devolver?
+		}
+	}
+	
+	public boolean registrarGoogle(String nombre, String email, String fechaNac, double peso, double altura, 
+			double fcm, double fcr, UsuarioTipoDTO usuarioTipo) {
+		try {
+			this.serviceLocator.getService().registrarGoogle(nombre, email, fechaNac, peso, altura, fcm, fcr, usuarioTipo);
+			return true;
+		} catch (RemoteException e) {
+			System.out.println("# Error en el registro: " + e);
+			return false;		//Qué tiene que devolver?
+		}
+	}
+	
+	public boolean registrarFacebook(String nombre, String email, String fechaNac, double peso, double altura, 
+			double fcm, double fcr, UsuarioTipoDTO usuarioTipo) {
+		try {
+			this.serviceLocator.getService().registrarFacebook(nombre, email, fechaNac, peso, altura, fcm, fcr, usuarioTipo);
+			return true;
+		} catch (RemoteException e) {
+			System.out.println("# Error en el registro: " + e);
+			return false;		//Qué tiene que devolver?
 		}
 	}
 }

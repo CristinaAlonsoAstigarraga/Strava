@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import clases.Deporte;
+import controller.LogInController;
+import controller.RetoController;
+//import clases.Deporte;
 import dto.DeporteDTO;
 import dto.RetoDTO;
 import dto.SesionEntrenamientoDTO;
@@ -34,6 +36,9 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	private JTextField textFieldDuracion;
 	private JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
 	List<SesionEntrenamientoDTO> listaSesionesCreadas = new ArrayList<SesionEntrenamientoDTO>();
+	
+	private static LogInController logInController;
+	private static RetoController controller;
 
 	/**
 	 * Launch the application.
@@ -42,7 +47,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCreacionManualEntrenamiento2 frame = new VentanaCreacionManualEntrenamiento2();
+					VentanaCreacionManualEntrenamiento2 frame = new VentanaCreacionManualEntrenamiento2(logInController, controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +59,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCreacionManualEntrenamiento2() {
+	public VentanaCreacionManualEntrenamiento2(LogInController logIncontroller, RetoController controller) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 300);
 		contentPane = new JPanel();
@@ -68,7 +73,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logIncontroller, controller);
 				vmp.setVisible(true);
 				setVisible(false);
 			}

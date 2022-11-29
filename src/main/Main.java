@@ -5,7 +5,7 @@ import controller.RetoController;
 import controller.SesionEntrenamientoController;
 import controller.UsuarioController;
 import remote.ServiceLocator;
-import services.StravaAppService;
+//import services.StravaAppService;
 
 public class Main {
 

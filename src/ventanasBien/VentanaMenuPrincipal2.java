@@ -13,9 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.LogInController;
+import controller.RetoController;
+
 public class VentanaMenuPrincipal2 extends JFrame {
 
 	private JPanel contentPane;
+	private static LogInController logIncontroller;
+	private static RetoController controller;
 
 	/**
 	 * Launch the application.
@@ -24,7 +29,7 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenuPrincipal2 frame = new VentanaMenuPrincipal2();
+					VentanaMenuPrincipal2 frame = new VentanaMenuPrincipal2(logIncontroller, controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +41,8 @@ public class VentanaMenuPrincipal2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMenuPrincipal2() {
+	public VentanaMenuPrincipal2(LogInController logInController, RetoController controller) {
+		setTitle("MENÚ PRINCIPAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 900, 250);
 		contentPane = new JPanel();
@@ -44,12 +50,12 @@ public class VentanaMenuPrincipal2 extends JFrame {
 
 		setContentPane(contentPane);
 		
-		VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2();
-		VentanaCreacionReto2 vcr = new VentanaCreacionReto2();
-		VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2();
-		VentanaAceptacionReto2 var = new VentanaAceptacionReto2();
-		VentanaConsultaEstadoRetos2  vcer = new VentanaConsultaEstadoRetos2();
-		VentanaVerRetos2 vr2 = new VentanaVerRetos2();
+		VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2(logInController, controller);
+		VentanaCreacionReto2 vcr = new VentanaCreacionReto2(logInController, controller);
+		VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2(logInController, controller);
+		VentanaAceptacionReto2 var = new VentanaAceptacionReto2(logInController, controller);
+		VentanaConsultaEstadoRetos2  vcer = new VentanaConsultaEstadoRetos2(logInController, controller);
+		VentanaVerRetos2 vr2 = new VentanaVerRetos2(logInController, controller);
 		
 		
 		JPanel panelNorte = new JPanel();

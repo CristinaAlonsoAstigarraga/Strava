@@ -7,10 +7,15 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controller.LogInController;
+import controller.RetoController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -20,6 +25,8 @@ public class VentanaLogIn2 extends JFrame {
 	private JTextField textFieldUsuario;
 	private JTextField textFieldContrasenya;
 	private JPasswordField txtContrasenia;
+	private static LogInController logInController;
+	private static RetoController controller;
 
 	/**
 	 * Launch the application.
@@ -49,6 +56,7 @@ public class VentanaLogIn2 extends JFrame {
 		setContentPane(contentPane);
 		
 		VentanaRegistro2 vr = new VentanaRegistro2();
+		VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
 		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
@@ -61,6 +69,18 @@ public class VentanaLogIn2 extends JFrame {
 		panelSur.setLayout(new GridLayout(0, 1, 0, 10));
 		
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
+		btnIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				System.out.println(textFieldUsuario.getText() + textFieldContrasenya.getText());
+//				logInController.loginLocal(textFieldUsuario.getText(), textFieldContrasenya.getText());
+				JOptionPane.showMessageDialog(null,  "Usuario creado correctamente", "INICIO SESIÓN CORRECTO", JOptionPane.INFORMATION_MESSAGE);
+//				System.out.println(logInController.getToken());
+				textFieldUsuario.setText("");
+				textFieldContrasenya.setText("");
+				vmp.setVisible(true);
+				setVisible(false);
+			}
+		});
 		panelSur.add(btnIniciarSesion);
 		
 		JButton btnISGoogle = new JButton("INICIAR SESIÓN CON GOOGLE");

@@ -7,9 +7,20 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controller.LogInController;
+import controller.RetoController;
+import dto.RetoDTO;
+import dto.UsuarioLocalDTO;
+
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class VentanaRegistro2 extends JFrame {
 
@@ -21,6 +32,9 @@ public class VentanaRegistro2 extends JFrame {
 	private JTextField textFieldAltura;
 	private JTextField textFieldFCM;
 	private JTextField textFieldFCR;
+	
+	
+	List<UsuarioLocalDTO> listaUsuarios = new ArrayList<UsuarioLocalDTO>();
 
 	/**
 	 * Launch the application.
@@ -46,6 +60,8 @@ public class VentanaRegistro2 extends JFrame {
 		setBounds(100, 100, 475, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		VentanaMenuPrincipal2 ventana = new  VentanaMenuPrincipal2(null, null);
 
 		setContentPane(contentPane);
 		
@@ -112,7 +128,42 @@ public class VentanaRegistro2 extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("REGISTRAR");
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//String erFechas = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+				UsuarioLocalDTO usuarioLocal = new UsuarioLocalDTO();
+				//falta poner restricciones para que no se pueda meter cualquier cosa
+				usuarioLocal.setEmail(textFieldEmail.getText());
+				usuarioLocal.setNombre(textFieldNombre.getText());
+				usuarioLocal.setFechaNac(textFieldFechaNac.getText());
+				usuarioLocal.setPeso(Double.parseDouble(textFieldPeso.getText()));
+				usuarioLocal.setFcm(Double.parseDouble(textFieldFCM.getText()));
+				usuarioLocal.setFcr(Double.parseDouble(textFieldFCR.getText()));
+			
+				listaUsuarios.add(usuarioLocal);
+				ventana.setVisible(true);
+				setVisible(false);
+				
+			}
+		});
 		panelSur.add(btnRegistrar);
+		
+		JButton btnverUsuarios = new JButton("VER USUARIOS");
+		btnverUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String info ="";
+				int contador = 0;
+				for(UsuarioLocalDTO usuario : listaUsuarios) {
+					contador++;
+					info = info + "Usuario "+contador+" ["+usuario+"]\n";
+					System.out.println(listaUsuarios);
+				
+				}
+				JOptionPane.showMessageDialog(null,  "Usuarios creados: \n"+info+"\n", "USUARIOS CREADOS", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		contentPane.add(btnverUsuarios);
 		
 		JButton btnRegistroGoogle = new JButton("REGISTRO GOOGLE");
 		panelSur.add(btnRegistroGoogle);

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import clases.Deporte;
 import controller.LogInController;
 import controller.RetoController;
 //import clases.Deporte;
@@ -103,11 +104,6 @@ public class VentanaCreacionReto2 extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
-		for(DeporteDTO d : DeporteDTO.values()) {
-			comboBoxDeporte.addItem(d);
-		}
-		panelCentro.add(comboBoxDeporte);
 		
 		JButton btnCrear = new JButton("CREAR");
 		btnCrear.addActionListener(new ActionListener() {
@@ -131,10 +127,10 @@ public class VentanaCreacionReto2 extends JFrame {
 				reto.setDistancia(Float.parseFloat(textFieldDistancia.getText()));
 				reto.setTiempoObjetivo(Float.parseFloat(textFieldTiempoObjetivo.getText()));
 				
-				if(comboBoxDeporte.getSelectedItem()==DeporteDTO.CICLISMO) {
-//					reto.setDeporte(DeporteDTO.CICLISMO);
-				}
-//				reto.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
+//				if(comboBoxDeporte_1.getSelectedItem()==DeporteDTO.CICLISMO) {
+////					reto.setDeporte(DeporteDTO.CICLISMO);
+//				}
+				reto.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
 				
 				
 				JOptionPane.showMessageDialog(null,  "RETO CREADO CORRECTAMENTE", "RETO CREADO", JOptionPane.INFORMATION_MESSAGE);
@@ -148,7 +144,7 @@ public class VentanaCreacionReto2 extends JFrame {
 //				System.out.println(listaRetosCreados);
 				
 //				controller.crearReto(logIncontroller.getToken(), reto);
-				controller.crearReto(-1, reto);	//Hay que poner la línea de arriba, pero de momento no hay token que coger porque no hay login
+//				controller.crearReto(-1, reto);	//Hay que poner la línea de arriba, pero de momento no hay token que coger porque no hay login
 			}
 		});
 		panelSur.add(btnCrear);
@@ -210,6 +206,12 @@ public class VentanaCreacionReto2 extends JFrame {
 		
 		JLabel lblDeporte = new JLabel("DEPORTE");
 		panelCentro.add(lblDeporte);
+		
+		JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+		for(DeporteDTO d : DeporteDTO.values()) {
+			comboBoxDeporte.addItem(d);
+		}
+		panelCentro.add(comboBoxDeporte);
 		
 		
 	}

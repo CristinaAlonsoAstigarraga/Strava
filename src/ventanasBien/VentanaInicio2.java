@@ -11,12 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import controller.LogInController;
+import controller.RetoController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class VentanaInicio2 extends JFrame {
 
 	private JPanel contentPane;
+	private static LogInController logInController;
+	private static RetoController controller;
 
 	/**
 	 * Launch the application.

@@ -109,10 +109,34 @@ public class VentanaVerRetos2 extends JFrame {
 		reto1.setDistancia(2);
 		reto1.setTiempoObjetivo(60);
 //		reto1.setDeporte(DeporteDTO.RUNNING);
-		reto1.setEstado(false);
+		reto1.setEstado(true);
+		
+		RetoDTO reto2 = new RetoDTO();
+		//reto2.setUsuario(usuario1);
+		//reto2.setSesionEntrenamiento(sesion1);
+		reto2.setNombre("Carrera (resistencia)");
+		reto2.setSfechaIni("31-05-2022");
+		reto2.setSfechaFin("15-06-2022");
+		reto2.setDistancia(2);
+		reto2.setTiempoObjetivo(60);
+//		reto2.setDeporte(DeporteDTO.RUNNING);
+		reto2.setEstado(false);
+		
+		RetoDTO reto3 = new RetoDTO();
+		//reto3.setUsuario(usuario1);
+		//reto3.setSesionEntrenamiento(sesion1);
+		reto3.setNombre("Carrera (resistencia)");
+		reto3.setSfechaIni("31-05-2022");
+		reto3.setSfechaFin("15-06-2022");
+		reto3.setDistancia(2);
+		reto3.setTiempoObjetivo(60);
+//		reto3.setDeporte(DeporteDTO.RUNNING);
+		reto3.setEstado(true);
 		
 		retos.add(reto0);
 		retos.add(reto1);
+		retos.add(reto2);
+		retos.add(reto3);
 		
 		//Rellenamos el modelo con los datos de los retos
 //		ArrayList<RetoDTO> retos = controller.getRetos(0); 

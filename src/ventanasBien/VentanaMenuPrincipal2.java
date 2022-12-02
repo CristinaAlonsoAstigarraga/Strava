@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.LogInController;
 import controller.RetoController;
+import dto.UsuarioLocalDTO;
 
 public class VentanaMenuPrincipal2 extends JFrame {
 
@@ -143,14 +144,8 @@ public class VentanaMenuPrincipal2 extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnEstadoRetos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vr2.setVisible(true);
-				setVisible(false);
-			}
-		});
 		panelCentro.add(btnVerRetos);
-
+		
 	}
 
 }

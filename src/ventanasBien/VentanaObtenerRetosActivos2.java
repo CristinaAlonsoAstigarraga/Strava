@@ -61,7 +61,7 @@ public class VentanaObtenerRetosActivos2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logIncontroller, controller);
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
 				vmp.setVisible(true);
 				setVisible(false);
 			}

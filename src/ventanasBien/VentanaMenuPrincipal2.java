@@ -54,9 +54,11 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2(logInController, controller);
 		VentanaCreacionReto2 vcr = new VentanaCreacionReto2(logInController, controller);
 		VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2(logInController, controller);
-		VentanaAceptacionReto2 var = new VentanaAceptacionReto2(logInController, controller);
+
 		VentanaConsultaEstadoRetos2  vcer = new VentanaConsultaEstadoRetos2(logInController, controller);
 		VentanaVerRetos2 vr2 = new VentanaVerRetos2(logInController, controller);
+		
+		VentanaAceptarReto var2 = new VentanaAceptarReto();
 		
 		
 		JPanel panelNorte = new JPanel();
@@ -122,7 +124,7 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnAceptarReto = new JButton("ACEPTACIÓN RETO");
 		btnAceptarReto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				var.setVisible(true);
+				var2.setVisible(true);
 				setVisible(false);
 			}
 		});

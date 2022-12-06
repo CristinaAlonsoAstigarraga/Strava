@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import clases.Deporte;
+//import clases.Deporte;
 import controller.LogInController;
 import controller.RetoController;
 //import clases.Deporte;
@@ -130,7 +130,7 @@ public class VentanaCreacionReto2 extends JFrame {
 //				if(comboBoxDeporte_1.getSelectedItem()==DeporteDTO.CICLISMO) {
 ////					reto.setDeporte(DeporteDTO.CICLISMO);
 //				}
-				reto.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
+//				reto.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
 				
 				
 				JOptionPane.showMessageDialog(null,  "RETO CREADO CORRECTAMENTE", "RETO CREADO", JOptionPane.INFORMATION_MESSAGE);

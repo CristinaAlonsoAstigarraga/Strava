@@ -14,7 +14,7 @@ public class ServiceLocator {
 		}
 		
 		try {
-			String URL = "//" + ip + ":" + puerto + "//" + nombreService;
+			String URL = "//" + ip + ":" + puerto + "/" + nombreService;
 			this.service= (IFachadaRemota) Naming.lookup(URL);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

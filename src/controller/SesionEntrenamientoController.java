@@ -1,46 +1,48 @@
 package controller;
 
-import java.rmi.RemoteException;
-import java.security.Provider.Service;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-//import clases.SesionEntrenamiento;
+import clases.Deporte;
 import dto.SesionEntrenamientoDTO;
 import remote.ServiceLocator;
 
 public class SesionEntrenamientoController {
 
 	private ServiceLocator serviceLocator;
+	private long token;
 	
-	public SesionEntrenamientoController(ServiceLocator serviceLocator) {
+	public SesionEntrenamientoController(ServiceLocator serviceLocator, long token) {
 		this.serviceLocator = serviceLocator;
+		this.token = token;
 	}
 	
-	public List<SesionEntrenamientoDTO> getSesiones(long token){
+	public void crearSesion(String titulo, Deporte deporte, double distancia, Date sFyH, double duracion) {
 		try {
-			return this.serviceLocator.getService().getSesiones();
-		} catch (RemoteException e) {
-			System.out.println("# Error obteniendo todas las sesiones: " + e);
+			SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
+			dto.setDeporte(deporte);
+			dto.setDistancia(distancia);
+			dto.setDuracion(duracion);
+			dto.setsFyH(sFyH);
+			dto.setTitulo(titulo);
+			this.serviceLocator.getService().crearSesion(dto, token);
+		} catch (Exception e) {
+			System.out.println("# Error during crearSesion: " + e);
+		}
+	}
+	
+	public List<String> getSesiones() {
+		try {
+			List<SesionEntrenamientoDTO> sesiones = this.serviceLocator.getService().getSesiones(token);
+			List<String> sSesiones = new ArrayList<>();
+			for(SesionEntrenamientoDTO dto : sesiones) {
+				sSesiones.add(dto.toString());
+			}
+			return sSesiones;
+		} catch (Exception e) {
+			System.out.println("# Error during getSesiones: " + e);
 			return null;
 		}
 	}
-	
-	public boolean crearSesionEntrenamiento(long token, SesionEntrenamientoDTO sesionDTO) {
-		try {
-			return this.serviceLocator.getService().crearSesionEntrenamiento(token, sesionDTO);
-		} catch (RemoteException e) {
-			System.out.println("# Error creando el reto: " + e);
-		}
-		return false;
-		
-	}
-	
-//	public SesionEntrenamiento crearSesionEntrenamiento(long token, SesionEntrenamientoDTO nuevaSesion) {
-//		try {
-//			return this.serviceLocator.getService().crearSesionEntrenamiento(token, nuevaSesion);
-//		} catch (RemoteException e) {
-//			System.out.println("# Error creando la sesión de entrenamiento: " + e);
-//			return null;
-//		}
-//	}
 }

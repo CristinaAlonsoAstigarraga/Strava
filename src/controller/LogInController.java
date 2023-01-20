@@ -1,108 +1,131 @@
 package controller;
 
 import java.rmi.RemoteException;
+import java.util.Date;
 
-import dto.UsuarioLocalDTO;
+import clases.UsuarioTipo;
+import dto.UsuarioDTO;
 import remote.ServiceLocator;
 
 public class LogInController {
-	
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
-	}
 
 	private ServiceLocator serviceLocator;
 	
-	//si el login no se hace bien se genera un token con -1 (numero no valido para token)
-	private long token = -1; 
+	private long token = -1; //si el login no se hace bien se genera un token con -1 (numero no valido para token)
 	
 	public LogInController(ServiceLocator serviceLocator) {
 		this.serviceLocator = serviceLocator;
 	}
-//	public boolean login(UsuarioLocalDTO usuario) {
-//		try {
-//			this.token = this.serviceLocator.getService().login(usuario);			
-//			return true;
-//		} catch (RemoteException e) {
-//			System.out.println("# Error during login: " + e);
-//			this.token = -1;
-//			return false;
-//		}
-//	}
+	
+	public void registroLocal(String nombre, String email, String contrasena, Date fNac, double peso, double altura,
+			double fcm, double fcr) {
+		
+		try {
+			UsuarioDTO dto = new UsuarioDTO();
+			dto.setAltura(altura);
+			dto.setContrasena(contrasena);
+			dto.setEmail(email);
+			dto.setFcm(fcm);
+			dto.setFcr(fcr);
+			dto.setFechaNac(fNac);
+			dto.setNombre(nombre);
+			dto.setPeso(peso);
+			dto.setUsuarioTipo(UsuarioTipo.LOCAL);
+			this.serviceLocator.getService().registarLocal(dto);
+		} catch (RemoteException e) {
+			System.out.println("# Error during registration: " + e);
+		}
+		
+	}
+	
+	public void registroGoogle(String nombre, String email, Date fNac, double peso, double altura,
+			double fcm, double fcr) {
+		
+		try {
+			UsuarioDTO dto = new UsuarioDTO();
+			dto.setAltura(altura);
+			dto.setEmail(email);
+			dto.setFcm(fcm);
+			dto.setFcr(fcr);
+			dto.setFechaNac(fNac);
+			dto.setNombre(nombre);
+			dto.setPeso(peso);
+			dto.setUsuarioTipo(UsuarioTipo.GOOGLE);
+			this.serviceLocator.getService().registrarGoogle(dto);
+		} catch (RemoteException e) {
+			System.out.println("# Error during registration: " + e);
+		}
+		
+	}
+	
+	public void registroFacebook(String nombre, String email, Date fNac, double peso, double altura,
+			double fcm, double fcr) {
+		
+		try {
+			UsuarioDTO dto = new UsuarioDTO();
+			dto.setAltura(altura);
+			dto.setEmail(email);
+			dto.setFcm(fcm);
+			dto.setFcr(fcr);
+			dto.setFechaNac(fNac);
+			dto.setNombre(nombre);
+			dto.setPeso(peso);
+			dto.setUsuarioTipo(UsuarioTipo.FACEBOOK);
+			this.serviceLocator.getService().registarFacebook(dto);
+		} catch (RemoteException e) {
+			System.out.println("# Error during registration: " + e);
+		}
+		
+	}
 	
 	public boolean loginLocal(String email, String contrasena) {
 		try {
-			System.out.println("hola");
-			System.out.println(this.getServiceLocator());
-			System.out.println(email + contrasena);
-		if( this.serviceLocator.getService() != null) {
 			this.token = this.serviceLocator.getService().loginLocal(email, contrasena);
-		
-			System.out.println(token);
-		}else {
-			System.out.println("error");
-		}
-			if(token == -1) {
-				return false;
-			} else {
-				return true;
-			}
-			
+			return true;
 		} catch (RemoteException e) {
-			System.out.println("# Error durante el inicio de sesión " + e);
+			System.out.println("# Error during login: " + e);
 			this.token = -1;
 			return false;
 		}
-	
-	}
-	
-	public boolean loginGoogle(String email) {
-		try {
-			this.token = this.serviceLocator.getService().loginGoogle(email);
-			if(token == -1) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (RemoteException e) {
-			System.out.println("# Error durante el inicio de sesión " + e);
-			this.token = -1;
-			return false;
-		}
-		
 	}
 	
 	public boolean loginFacebook(String email) {
 		try {
 			this.token = this.serviceLocator.getService().loginFacebook(email);
-			if(token == -1) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (RemoteException e) {
-			System.out.println("# Error durante el inicio de sesión " + e);
+			return true;
+		} catch (Exception e) {
+			System.out.println("# Error during login: " + e);
 			this.token = -1;
 			return false;
 		}
-		
+	}
+	
+	public boolean loginGoogle(String email) {
+		try {
+			this.token = this.serviceLocator.getService().loginGoogle(email);
+			return true;
+		} catch (Exception e) {
+			System.out.println("# Error during login: " + e);
+			this.token = -1;
+			return false;
+		}
 	}
 	
 	public void logout() {
 		try {
-			this.serviceLocator.getService().logout(this.token);
+			this.serviceLocator.getService().logout(token);
 			this.token = -1;
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			System.out.println("# Error during logout: " + e);
 		}
 	}
-	
+
+	public ServiceLocator getServiceLocator() {
+		return serviceLocator;
+	}
+
 	public long getToken() {
 		return token;
 	}
-
+	
 }

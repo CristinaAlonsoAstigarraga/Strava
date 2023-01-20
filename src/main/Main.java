@@ -9,6 +9,7 @@ import controller.UsuarioController;
 import remote.ServiceLocator;
 //import services.StravaAppService;
 import ventanasBien.VentanaInicio2;
+import ventanasBien.VentanaLogIn2;
 
 public class Main {
 
@@ -29,7 +30,8 @@ public class Main {
 
 				try {
 
-					VentanaInicio2 frame = new VentanaInicio2();
+					VentanaLogIn2 frame = new VentanaLogIn2(serviceLocator);
+					System.out.println(serviceLocator);
 
 					frame.setVisible(true);
 

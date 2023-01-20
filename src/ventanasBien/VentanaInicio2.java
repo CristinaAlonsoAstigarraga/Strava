@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.LogInController;
 import controller.RetoController;
+import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,7 @@ public class VentanaInicio2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio2 frame = new VentanaInicio2();
+					VentanaInicio2 frame = new VentanaInicio2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +44,7 @@ public class VentanaInicio2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInicio2() {
+	public VentanaInicio2(ServiceLocator servicelocator) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,8 +53,8 @@ public class VentanaInicio2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		VentanaLogIn2 vli = new VentanaLogIn2();
-		VentanaRegistro2 vr = new VentanaRegistro2();
+		VentanaLogIn2 vli = new VentanaLogIn2(servicelocator);
+		VentanaRegistro2 vr = new VentanaRegistro2(servicelocator);
 		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);

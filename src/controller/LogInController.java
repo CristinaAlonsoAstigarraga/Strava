@@ -7,6 +7,14 @@ import remote.ServiceLocator;
 
 public class LogInController {
 	
+	public ServiceLocator getServiceLocator() {
+		return serviceLocator;
+	}
+
+	public void setServiceLocator(ServiceLocator serviceLocator) {
+		this.serviceLocator = serviceLocator;
+	}
+
 	private ServiceLocator serviceLocator;
 	
 	//si el login no se hace bien se genera un token con -1 (numero no valido para token)
@@ -28,12 +36,22 @@ public class LogInController {
 	
 	public boolean loginLocal(String email, String contrasena) {
 		try {
+			System.out.println("hola");
+			System.out.println(this.getServiceLocator());
+			System.out.println(email + contrasena);
+		if( this.serviceLocator.getService() != null) {
 			this.token = this.serviceLocator.getService().loginLocal(email, contrasena);
+		
+			System.out.println(token);
+		}else {
+			System.out.println("error");
+		}
 			if(token == -1) {
 				return false;
 			} else {
 				return true;
 			}
+			
 		} catch (RemoteException e) {
 			System.out.println("# Error durante el inicio de sesión " + e);
 			this.token = -1;

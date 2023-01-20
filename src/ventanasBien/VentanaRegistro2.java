@@ -12,10 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+
 import controller.LogInController;
 import controller.RetoController;
+import controller.UsuarioController;
 import dto.RetoDTO;
 import dto.UsuarioLocalDTO;
+import dto.UsuarioTipoDTO;
+import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -33,8 +37,11 @@ public class VentanaRegistro2 extends JFrame {
 	private JTextField textFieldFCM;
 	private JTextField textFieldFCR;
 	
+	private UsuarioController usuariocontoller;
+	
 	
 	List<UsuarioLocalDTO> listaUsuarios = new ArrayList<UsuarioLocalDTO>();
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -43,7 +50,7 @@ public class VentanaRegistro2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRegistro2 frame = new VentanaRegistro2();
+					VentanaRegistro2 frame = new VentanaRegistro2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,13 +62,13 @@ public class VentanaRegistro2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistro2() {
+	public VentanaRegistro2(ServiceLocator servicelocator) {
+		usuariocontoller = new UsuarioController(servicelocator);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 475, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		VentanaMenuPrincipal2 ventana = new  VentanaMenuPrincipal2(null, null);
 
 		setContentPane(contentPane);
 		
@@ -121,6 +128,14 @@ public class VentanaRegistro2 extends JFrame {
 		panelCentro.add(textFieldFCR);
 		textFieldFCR.setColumns(10);
 		
+		JLabel lblNewContrasena = new JLabel("Contraseña");
+		panelCentro.add(lblNewContrasena);
+		
+		textField = new JTextField();
+		textField.setText("");
+		panelCentro.add(textField);
+		textField.setColumns(10);
+		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
@@ -139,9 +154,12 @@ public class VentanaRegistro2 extends JFrame {
 				usuarioLocal.setPeso(Double.parseDouble(textFieldPeso.getText()));
 				usuarioLocal.setFcm(Double.parseDouble(textFieldFCM.getText()));
 				usuarioLocal.setFcr(Double.parseDouble(textFieldFCR.getText()));
+				usuarioLocal.setContrasena(textField.getText());
+				
+				usuariocontoller.registrarLocal(usuarioLocal.getNombre(), usuarioLocal.getEmail(), usuarioLocal.getContrasena(), usuarioLocal.getFechaNac(), usuarioLocal.getPeso(), usuarioLocal.getAltura(), usuarioLocal.getFcm(), usuarioLocal.getFcr(), UsuarioTipoDTO.LOCAL);
 			
 				listaUsuarios.add(usuarioLocal);
-				ventana.setVisible(true);
+				new VentanaLogIn2(servicelocator).setVisible(true);
 				setVisible(false);
 				
 			}

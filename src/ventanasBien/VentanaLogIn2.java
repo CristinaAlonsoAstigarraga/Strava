@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.LogInController;
 import controller.RetoController;
+import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,7 @@ public class VentanaLogIn2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaLogIn2 frame = new VentanaLogIn2();
+					VentanaLogIn2 frame = new VentanaLogIn2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +48,11 @@ public class VentanaLogIn2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaLogIn2() {
+	public VentanaLogIn2(ServiceLocator servicelocator) {
+		logInController = new LogInController(servicelocator);
+		controller = new RetoController(servicelocator);
+		
+		System.out.println(servicelocator);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 300);
 		contentPane = new JPanel();
@@ -55,7 +60,7 @@ public class VentanaLogIn2 extends JFrame {
 
 		setContentPane(contentPane);
 		
-		VentanaRegistro2 vr = new VentanaRegistro2();
+		VentanaRegistro2 vr = new VentanaRegistro2(servicelocator);
 		VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
 		
 		JPanel panelNorte = new JPanel();
@@ -71,14 +76,15 @@ public class VentanaLogIn2 extends JFrame {
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println(textFieldUsuario.getText() + textFieldContrasenya.getText());
-//				logInController.loginLocal(textFieldUsuario.getText(), textFieldContrasenya.getText());
+				System.out.println(textFieldUsuario.getText() + textFieldContrasenya.getText());
+				logInController.loginLocal(textFieldUsuario.getText(), textFieldContrasenya.getText());
 				JOptionPane.showMessageDialog(null,  "Usuario creado correctamente", "INICIO SESIÓN CORRECTO", JOptionPane.INFORMATION_MESSAGE);
-//				System.out.println(logInController.getToken());
+				System.out.println(logInController.getToken());
 				textFieldUsuario.setText("");
 				textFieldContrasenya.setText("");
 				vmp.setVisible(true);
 				setVisible(false);
+		
 			}
 		});
 		panelSur.add(btnIniciarSesion);

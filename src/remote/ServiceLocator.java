@@ -16,6 +16,7 @@ public class ServiceLocator {
 		try {
 			String URL = "//" + ip + ":" + puerto + "/" + nombreService;
 			this.service= (IFachadaRemota) Naming.lookup(URL);
+			System.out.println(service);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.err.println("# Error localizando fachada remota" + e);

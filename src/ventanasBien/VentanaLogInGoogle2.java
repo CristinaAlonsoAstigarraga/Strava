@@ -52,7 +52,7 @@ public class VentanaLogInGoogle2 extends JFrame {
 
 		setContentPane(contentPane);
 		
-		VentanaRegistro2 vr = new VentanaRegistro2();
+		VentanaRegistro2 vr = new VentanaRegistro2(logInController.getServiceLocator());
 		VentanaMenuPrincipal2 mp = new VentanaMenuPrincipal2(logInController, controller);
 		
 		JPanel panelNorte = new JPanel();

@@ -8,22 +8,19 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.LogInController;
-import controller.RetoController;
-//import clases.Deporte;
-import dto.DeporteDTO;
-import dto.RetoDTO;
+import clases.Deporte;
+import controller.SesionEntrenamientoController;
 import dto.SesionEntrenamientoDTO;
 
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class VentanaCreacionManualEntrenamiento2 extends JFrame {
@@ -32,13 +29,12 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	private JTextField textFieldTitulo;
 	private JTextField textFieldDistancia;
 	private JTextField textFieldFechaHoraInicio;
-//	private JTextField textFieldFechaFin;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	private JTextField textFieldDuracion;
-	private JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
+	private JComboBox comboBoxDeporte = new JComboBox<Deporte>();
 	List<SesionEntrenamientoDTO> listaSesionesCreadas = new ArrayList<SesionEntrenamientoDTO>();
 	
-	private static LogInController logInController;
-	private static RetoController controller;
+	private static SesionEntrenamientoController controller;
 
 	/**
 	 * Launch the application.
@@ -47,7 +43,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCreacionManualEntrenamiento2 frame = new VentanaCreacionManualEntrenamiento2(logInController, controller);
+					VentanaCreacionManualEntrenamiento2 frame = new VentanaCreacionManualEntrenamiento2(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +55,8 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCreacionManualEntrenamiento2(LogInController logIncontroller, RetoController controller) {
+	public VentanaCreacionManualEntrenamiento2(SesionEntrenamientoController cont) {
+		controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 300);
 		contentPane = new JPanel();
@@ -73,7 +70,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logIncontroller, controller);
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(null, null);
 				vmp.setVisible(true);
 				setVisible(false);
 			}
@@ -111,8 +108,8 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JLabel lblDeporte = new JLabel("DEPORTE");
 		panelCentro.add(lblDeporte);
 		
-		JComboBox comboBoxDeporte = new JComboBox<DeporteDTO>();
-		for(DeporteDTO d : DeporteDTO.values()) {
+		JComboBox comboBoxDeporte = new JComboBox<Deporte>();
+		for(Deporte d : Deporte.values()) {
 			comboBoxDeporte.addItem(d);
 		}
 		panelCentro.add(comboBoxDeporte);
@@ -144,29 +141,19 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JButton btnCrear = new JButton("CREAR");
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String erFechas = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
-//				String erDistancia = "[0-9]{3}.[0-9]{2}";
-				SesionEntrenamientoDTO sesion = new SesionEntrenamientoDTO();
-				//controller.crearsesion(0, sesion);	//En vez de 0, getToken
-				
-				sesion.setTitulo(textFieldTitulo.getText());
-				boolean fechaCrrecta = Pattern.matches(erFechas, textFieldFechaHoraInicio.getText());
-				if(!fechaCrrecta) {
-					JOptionPane.showMessageDialog(null,  "La fecha de inicio no tiene un formato correcto", "ERROR", JOptionPane.ERROR_MESSAGE);
-				} else {
-					sesion.setsFechaYHoraIni(textFieldFechaHoraInicio.getText());
+				Date fyh = new Date();
+				try {
+					String sFecha = textFieldFechaHoraInicio.getSelectedText();
+					fyh = sdf.parse(sFecha);
+				} catch (Exception e2) {
+					System.out.println("Error al convertir la fecha: " + e2);
 				}
-				sesion.setDistancia(Float.parseFloat(textFieldDistancia.getText()));
-				sesion.setDuracion(Float.parseFloat(textFieldDuracion.getText()));
-//				sesion.setDeporte((Deporte) comboBoxDeporte.getSelectedItem());	//No coge el valor, da null
-				JOptionPane.showMessageDialog(null,  "SESIÓN CREADA CORRECTAMENTE", "SESIÓN CREADA", JOptionPane.INFORMATION_MESSAGE);
+				String titulo = textFieldTitulo.getText();
+				Deporte deporte = (Deporte) comboBoxDeporte.getSelectedItem();
+				double distancia = Double.parseDouble(textFieldDistancia.getText());
+				double duracion = Double.parseDouble(textFieldDuracion.getText());
 				
-				textFieldTitulo.setText("");
-				textFieldFechaHoraInicio.setText("");
-				textFieldDistancia.setText("");
-				textFieldDuracion.setText("");
-				listaSesionesCreadas.add(sesion);
-//				System.out.println(listasesionsCreados);
+				controller.crearSesion(titulo, deporte, distancia, fyh, duracion);
 			}
 		});
 		panelSur.add(btnCrear);
@@ -174,13 +161,9 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JButton btnVerSesiones = new JButton("VER SESIONES CREADAS");
 		btnVerSesiones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String info ="";
-				int contador = 0;
-				for(SesionEntrenamientoDTO sesion : listaSesionesCreadas) {
-					contador++;
-					info = info + "Sesión "+contador+" ["+sesion+"]\n";
-				}
-				JOptionPane.showMessageDialog(null,  "Listado sesiones creadas: \n"+info+"\n", "SESIONES CREADASS", JOptionPane.INFORMATION_MESSAGE);
+				List<String> sesiones = new ArrayList<String>();
+				sesiones = controller.getSesiones();
+				System.out.println(sesiones);
 			}
 		});
 		panelSur.add(btnVerSesiones);

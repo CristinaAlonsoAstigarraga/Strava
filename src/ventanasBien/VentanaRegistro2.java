@@ -7,41 +7,34 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.toedter.calendar.JDateChooser;
 
 import controller.LogInController;
-import controller.RetoController;
-import controller.UsuarioController;
-import dto.RetoDTO;
 import dto.UsuarioLocalDTO;
-import dto.UsuarioTipoDTO;
 import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class VentanaRegistro2 extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField textFieldNombre;
-	private JTextField textFieldEmail;
-	private JTextField textFieldFechaNac;
-	private JTextField textFieldPeso;
-	private JTextField textFieldAltura;
-	private JTextField textFieldFCM;
-	private JTextField textFieldFCR;
 	
-	private UsuarioController usuariocontoller;
+	private static final long serialVersionUID = 1L;
+	
+	private JPanel contentPane;
+	private JTextField textFieldNombre, textFieldEmail, textFieldPeso, textFieldAltura, textFieldFCM, 
+						textFieldFCR, textFieldContrasena;
+	private LogInController logincontoller;
+	private JDateChooser jdcFechaNac;
 	
 	
 	List<UsuarioLocalDTO> listaUsuarios = new ArrayList<UsuarioLocalDTO>();
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -63,7 +56,7 @@ public class VentanaRegistro2 extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaRegistro2(ServiceLocator servicelocator) {
-		usuariocontoller = new UsuarioController(servicelocator);
+		logincontoller = new LogInController(servicelocator);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 475, 300);
 		contentPane = new JPanel();
@@ -86,6 +79,14 @@ public class VentanaRegistro2 extends JFrame {
 		panelCentro.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
+		JLabel lblNewContrasena = new JLabel("CONTRASEÑA");
+		panelCentro.add(lblNewContrasena);
+		
+		textFieldContrasena = new JTextField();
+		textFieldContrasena.setText("");
+		panelCentro.add(textFieldContrasena);
+		textFieldContrasena.setColumns(10);
+		
 		JLabel lblNombre = new JLabel("NOMBRE:");
 		panelCentro.add(lblNombre);
 		
@@ -96,9 +97,8 @@ public class VentanaRegistro2 extends JFrame {
 		JLabel lblFechaNac = new JLabel("FECHA NACIMIENTO");
 		panelCentro.add(lblFechaNac);
 		
-		textFieldFechaNac = new JTextField();
-		panelCentro.add(textFieldFechaNac);
-		textFieldFechaNac.setColumns(10);
+		jdcFechaNac = new JDateChooser("dd-MM-yyyy", "##-##-####", '_');
+		panelCentro.add(jdcFechaNac);
 		
 		JLabel lblPeso = new JLabel("PESO:");
 		panelCentro.add(lblPeso);
@@ -128,14 +128,6 @@ public class VentanaRegistro2 extends JFrame {
 		panelCentro.add(textFieldFCR);
 		textFieldFCR.setColumns(10);
 		
-		JLabel lblNewContrasena = new JLabel("Contraseña");
-		panelCentro.add(lblNewContrasena);
-		
-		textField = new JTextField();
-		textField.setText("");
-		panelCentro.add(textField);
-		textField.setColumns(10);
-		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
@@ -145,23 +137,16 @@ public class VentanaRegistro2 extends JFrame {
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String erFechas = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
-				UsuarioLocalDTO usuarioLocal = new UsuarioLocalDTO();
-				//falta poner restricciones para que no se pueda meter cualquier cosa
-				usuarioLocal.setEmail(textFieldEmail.getText());
-				usuarioLocal.setNombre(textFieldNombre.getText());
-				usuarioLocal.setFechaNac(textFieldFechaNac.getText());
-				usuarioLocal.setPeso(Double.parseDouble(textFieldPeso.getText()));
-				usuarioLocal.setFcm(Double.parseDouble(textFieldFCM.getText()));
-				usuarioLocal.setFcr(Double.parseDouble(textFieldFCR.getText()));
-				usuarioLocal.setContrasena(textField.getText());
+				String email = textFieldEmail.getText();
+				String contrasena = textFieldContrasena.getText();
+				String nombre = textFieldNombre.getText();
+				Date fNac = jdcFechaNac.getDate();
+				double peso = Double.parseDouble(textFieldPeso.getText());
+				double altura = Double.parseDouble(textFieldAltura.getText());
+				double fcm = Double.parseDouble(textFieldFCM.getText());
+				double fcr = Double.parseDouble(textFieldFCR.getText());
 				
-				usuariocontoller.registrarLocal(usuarioLocal.getNombre(), usuarioLocal.getEmail(), usuarioLocal.getContrasena(), usuarioLocal.getFechaNac(), usuarioLocal.getPeso(), usuarioLocal.getAltura(), usuarioLocal.getFcm(), usuarioLocal.getFcr(), UsuarioTipoDTO.LOCAL);
-			
-				listaUsuarios.add(usuarioLocal);
-				new VentanaLogIn2(servicelocator).setVisible(true);
-				setVisible(false);
-				
+				logincontoller.registroLocal(nombre, email, contrasena, fNac, peso, altura, fcm, fcr);
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -169,24 +154,52 @@ public class VentanaRegistro2 extends JFrame {
 		JButton btnverUsuarios = new JButton("VER USUARIOS");
 		btnverUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String info ="";
-				int contador = 0;
-				for(UsuarioLocalDTO usuario : listaUsuarios) {
-					contador++;
-					info = info + "Usuario "+contador+" ["+usuario+"]\n";
-					System.out.println(listaUsuarios);
-				
-				}
-				JOptionPane.showMessageDialog(null,  "Usuarios creados: \n"+info+"\n", "USUARIOS CREADOS", JOptionPane.INFORMATION_MESSAGE);
+//				String info ="";
+//				int contador = 0;
+//				for(UsuarioLocalDTO usuario : listaUsuarios) {
+//					contador++;
+//					info = info + "Usuario "+contador+" ["+usuario+"]\n";
+//					System.out.println(listaUsuarios);
+//				
+//				}
+//				JOptionPane.showMessageDialog(null,  "Usuarios creados: \n"+info+"\n", "USUARIOS CREADOS", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
 		contentPane.add(btnverUsuarios);
 		
 		JButton btnRegistroGoogle = new JButton("REGISTRO GOOGLE");
+		btnRegistroGoogle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String email = textFieldEmail.getText();
+				String nombre = textFieldNombre.getText();
+				Date fNac = jdcFechaNac.getDate();
+				double peso = Double.parseDouble(textFieldPeso.getText());
+				double altura = Double.parseDouble(textFieldAltura.getText());
+				double fcm = Double.parseDouble(textFieldFCM.getText());
+				double fcr = Double.parseDouble(textFieldFCR.getText());
+				
+				logincontoller.registroGoogle(nombre, email, fNac, peso, altura, fcm, fcr);
+				
+			}
+		});
 		panelSur.add(btnRegistroGoogle);
 		
 		JButton btnRegistroFB = new JButton("REGISTRO FACEBOOK");
+		btnRegistroFB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String email = textFieldEmail.getText();
+				String nombre = textFieldNombre.getText();
+				Date fNac = jdcFechaNac.getDate();
+				double peso = Double.parseDouble(textFieldPeso.getText());
+				double altura = Double.parseDouble(textFieldAltura.getText());
+				double fcm = Double.parseDouble(textFieldFCM.getText());
+				double fcr = Double.parseDouble(textFieldFCR.getText());
+				
+				logincontoller.registroFacebook(nombre, email, fNac, peso, altura, fcm, fcr);
+			}
+		});
 		panelSur.add(btnRegistroFB);
 		
 		JPanel panelOeste = new JPanel();

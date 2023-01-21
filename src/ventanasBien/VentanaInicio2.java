@@ -12,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.LogInController;
-import controller.RetoController;
 import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
@@ -21,9 +19,9 @@ import java.awt.event.ActionEvent;
 
 public class VentanaInicio2 extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
-	private static LogInController logInController;
-	private static RetoController controller;
 
 	/**
 	 * Launch the application.
@@ -53,24 +51,13 @@ public class VentanaInicio2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		VentanaLogIn2 vli = new VentanaLogIn2(servicelocator);
-		VentanaRegistro2 vr = new VentanaRegistro2(servicelocator);
-		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblInicioStrava_1 = new JLabel("Inicio Strava");
+		JLabel lblInicioStrava_1 = new JLabel("AppStrava");
 		lblInicioStrava_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		panelNorte.add(lblInicioStrava_1);
-		
-		JButton btnLogOut = new JButton("Log Out");
-		btnLogOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		panelNorte.add(btnLogOut);
 		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro);
@@ -79,8 +66,18 @@ public class VentanaInicio2 extends JFrame {
 		JButton btnIniciarSesion = new JButton("Iniciar sesion");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vli.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							VentanaLogIn2 vLI = new VentanaLogIn2(servicelocator);
+							vLI.setVisible(true);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+						
+					}
+				});
 			}
 		});
 		panelCentro.add(btnIniciarSesion);
@@ -88,8 +85,17 @@ public class VentanaInicio2 extends JFrame {
 		JButton btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vr.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaRegistro2 vR = new VentanaRegistro2(servicelocator);
+							vR.setVisible(true);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+						
+					}
+				});
 			}
 		});
 		panelCentro.add(btnRegistrarse);

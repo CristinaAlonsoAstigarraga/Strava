@@ -7,27 +7,25 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.LogInController;
-import controller.RetoController;
 import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class VentanaLogIn2 extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContrasenya;
 	private JPasswordField txtContrasenia;
-	private static LogInController logInController;
-	private static RetoController controller;
+	private LogInController logInController;
 
 	/**
 	 * Launch the application.
@@ -50,7 +48,6 @@ public class VentanaLogIn2 extends JFrame {
 	 */
 	public VentanaLogIn2(ServiceLocator servicelocator) {
 		logInController = new LogInController(servicelocator);
-		controller = new RetoController(servicelocator);
 		
 		System.out.println(servicelocator);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,55 +57,11 @@ public class VentanaLogIn2 extends JFrame {
 
 		setContentPane(contentPane);
 		
-		VentanaRegistro2 vr = new VentanaRegistro2(servicelocator);
-		VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
-		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblLogIn = new JLabel("LOG IN");
 		panelNorte.add(lblLogIn);
-		
-		JPanel panelSur = new JPanel();
-		contentPane.add(panelSur, BorderLayout.SOUTH);
-		panelSur.setLayout(new GridLayout(0, 1, 0, 10));
-		
-		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
-		btnIniciarSesion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(textFieldUsuario.getText() + textFieldContrasenya.getText());
-				logInController.loginLocal(textFieldUsuario.getText(), textFieldContrasenya.getText());
-				JOptionPane.showMessageDialog(null,  "Usuario creado correctamente", "INICIO SESIÓN CORRECTO", JOptionPane.INFORMATION_MESSAGE);
-				System.out.println(logInController.getToken());
-				textFieldUsuario.setText("");
-				textFieldContrasenya.setText("");
-				vmp.setVisible(true);
-				setVisible(false);
-		
-			}
-		});
-		panelSur.add(btnIniciarSesion);
-		
-		JButton btnISGoogle = new JButton("INICIAR SESIÓN CON GOOGLE");
-		panelSur.add(btnISGoogle);
-		
-		JButton btnISFaceBook = new JButton("INICIAR SESIÓN CON FACEBOOK");
-		panelSur.add(btnISFaceBook);
-		
-		JButton btnRegistro = new JButton("REGISTRAR");
-		btnRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vr.setVisible(true);
-				setVisible(false);
-			}
-		});
-		panelSur.add(btnRegistro);
-		
-		JPanel panelOeste = new JPanel();
-		contentPane.add(panelOeste, BorderLayout.WEST);
-		
-		JPanel panelEste = new JPanel();
-		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
@@ -124,9 +77,106 @@ public class VentanaLogIn2 extends JFrame {
 		JLabel lblContrasenya = new JLabel("CONTRASEÑA:");
 		panelCentro.add(lblContrasenya);
 		
-		textFieldContrasenya = new JPasswordField();
-		panelCentro.add(textFieldContrasenya);
-		textFieldContrasenya.setColumns(10);
+		txtContrasenia = new JPasswordField();
+		panelCentro.add(txtContrasenia);
+		txtContrasenia.setColumns(10);
+		
+		JPanel panelOeste = new JPanel();
+		contentPane.add(panelOeste, BorderLayout.WEST);
+		
+		JPanel panelEste = new JPanel();
+		contentPane.add(panelEste, BorderLayout.EAST);
+		
+		JPanel panelSur = new JPanel();
+		contentPane.add(panelSur, BorderLayout.SOUTH);
+		panelSur.setLayout(new GridLayout(0, 1, 0, 10));
+		
+		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
+		btnIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String email = textFieldUsuario.getText();
+				String contrasena = txtContrasenia.getText(); 
+				if(logInController.loginLocal(email, contrasena)) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+								vM.setVisible(true);
+							} catch (Exception e2) {
+								e2.printStackTrace();
+							}
+						}
+					});
+				}else {
+					System.out.println("Error durante loginLocal!");
+				}
+			}
+		});
+		panelSur.add(btnIniciarSesion);
+		
+		JButton btnLoginGoogle = new JButton("INICIAR SESIÓN CON GOOGLE");
+		btnLoginGoogle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String email = textFieldUsuario.getText();
+				if(logInController.loginGoogle(email)) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+								vM.setVisible(true);
+							} catch (Exception e2) {
+								e2.printStackTrace();
+							}
+						}
+					});
+				}else {
+					System.out.println("Error durante loginGoogle!");
+				}
+			}
+		});
+		panelSur.add(btnLoginGoogle);
+		
+		JButton btnLoginFaceBook = new JButton("INICIAR SESIÓN CON FACEBOOK");
+		btnLoginFaceBook.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String email = textFieldUsuario.getText();
+				if(logInController.loginFacebook(email)) {
+					EventQueue.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+								vM.setVisible(true);
+							} catch (Exception e2) {
+								e2.printStackTrace();
+							}
+							
+						}
+					});
+				}else {
+					System.out.println("Error durante loginFacebook!");
+				}
+			}
+		});
+		panelSur.add(btnLoginFaceBook);
+	
+		JButton btnRegistro = new JButton("REGISTRAR");
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaRegistro2 vR = new VentanaRegistro2(servicelocator);
+							vR.setVisible(true);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		panelSur.add(btnRegistro);
 	}
-
 }

@@ -10,39 +10,47 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+
 import controller.LogInController;
 import controller.RetoController;
+import controller.SesionEntrenamientoController;
 import dto.UsuarioLocalDTO;
 
 public class VentanaMenuPrincipal2 extends JFrame {
 
 	private JPanel contentPane;
-	private static LogInController logIncontroller;
-	private static RetoController controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaMenuPrincipal2 frame = new VentanaMenuPrincipal2(logIncontroller, controller);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private static LogInController logInController;
+	private static RetoController retoController;
+	private static SesionEntrenamientoController sesionEntrenamientoController;
+	protected int respuesta;
+	
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VentanaMenuPrincipal2 frame = new VentanaMenuPrincipal2(logInController);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMenuPrincipal2(LogInController logInController, RetoController controller) {
+	public VentanaMenuPrincipal2(LogInController logInContro) {
+		logInController = logInContro;
+		retoController = new RetoController(logInContro.getServiceLocator(), logInController.getToken());
+		sesionEntrenamientoController = new SesionEntrenamientoController(logInContro.getServiceLocator(), logInController.getToken());
 		setTitle("MENÚ PRINCIPAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 900, 250);
@@ -51,14 +59,14 @@ public class VentanaMenuPrincipal2 extends JFrame {
 
 		setContentPane(contentPane);
 		
-		VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2(logInController, controller);
-		VentanaCreacionReto2 vcr = new VentanaCreacionReto2(logInController, controller);
-		VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2(logInController, controller);
-
-		VentanaConsultaEstadoRetos2  vcer = new VentanaConsultaEstadoRetos2(logInController, controller);
-		VentanaVerRetos2 vr2 = new VentanaVerRetos2(logInController, controller);
-		
-		VentanaAceptarReto var2 = new VentanaAceptarReto();
+//		VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2(logIncontroller, controller);
+//		VentanaCreacionReto2 vcr = new VentanaCreacionReto2(logIncontroller, controller);
+//		VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2(logIncontroller, controller);
+//
+//		VentanaConsultaEstadoRetos2  vcer = new VentanaConsultaEstadoRetos2(logIncontroller, controller);
+//		VentanaVerRetos2 vr2 = new VentanaVerRetos2(logIncontroller, controller);
+//		
+//		VentanaAceptarReto var2 = new VentanaAceptarReto();
 		
 		
 		JPanel panelNorte = new JPanel();
@@ -96,8 +104,16 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnCrearManual = new JButton("CREAR MANUAL SESIÓN ENTRENAMIENTO");
 		btnCrearManual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vcme.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaCreacionManualEntrenamiento2 vcme = new VentanaCreacionManualEntrenamiento2(sesionEntrenamientoController);
+							vcme.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 	
@@ -106,8 +122,16 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnCrearReto = new JButton("CREAR RETO");
 		btnCrearReto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vcr.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaCreacionReto2 vcr = new VentanaCreacionReto2(retoController);
+							vcr.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		panelCentro.add(btnCrearReto);
@@ -115,8 +139,16 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnInfoRetos = new JButton("INFORMACIÓN RETOS ACTIVOS");
 		btnInfoRetos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vora.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaConsultaEstadoRetos2 vcer = new VentanaConsultaEstadoRetos2(retoController);
+							vcer.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		panelCentro.add(btnInfoRetos);
@@ -124,17 +156,34 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnAceptarReto = new JButton("ACEPTACIÓN RETO");
 		btnAceptarReto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				var2.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaAceptarReto var = new VentanaAceptarReto(retoController);
+							var.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		panelCentro.add(btnAceptarReto);
 		
+		//Estado de los retos activos
 		JButton btnEstadoRetos = new JButton("ESTADO RETOS");
 		btnEstadoRetos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vcer.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaObtenerRetosActivos2 vora = new VentanaObtenerRetosActivos2(retoController);
+							vora.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		panelCentro.add(btnEstadoRetos);
@@ -142,8 +191,16 @@ public class VentanaMenuPrincipal2 extends JFrame {
 		JButton btnVerRetos = new JButton("VER RETOS");
 		btnVerRetos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vr2.setVisible(true);
-				setVisible(false);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaVerRetos2 vcer = new VentanaVerRetos2(retoController);
+							vcer.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		panelCentro.add(btnVerRetos);

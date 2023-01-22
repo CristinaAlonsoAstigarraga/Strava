@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import clases.Deporte;
+
 import controller.RetoController;
 import dto.RetoDTO;
 
@@ -74,8 +74,8 @@ public class VentanaCreacionReto2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(null, controller);
-				vmp.setVisible(true);
+//				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2();
+//				vmp.setVisible(true);
 				setVisible(false);
 			}
 		});
@@ -87,7 +87,8 @@ public class VentanaCreacionReto2 extends JFrame {
 		JButton btnLogOut = new JButton("LOG OUT");
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+//				setVisible(false);
+				dispose();
 			}
 		});
 		panelNorte.add(btnLogOut);

@@ -2,8 +2,6 @@ package controller;
 
 import java.rmi.RemoteException;
 import java.util.Date;
-
-import clases.UsuarioTipo;
 import dto.UsuarioDTO;
 import remote.ServiceLocator;
 
@@ -17,6 +15,7 @@ public class LogInController {
 		this.serviceLocator = serviceLocator;
 	}
 	
+	/*
 	public void registroLocal(String nombre, String email, String contrasena, Date fNac, double peso, double altura,
 			double fcm, double fcr) {
 		
@@ -77,7 +76,32 @@ public class LogInController {
 		}
 		
 	}
+	*
+	*	CAMBIAMOS TODOS LOS REGISTROS POR UNO ÚNICO CONJUNTO:
+	*/
 	
+	public void registro(String nombre, String email, String contrasena, Date fNac, double peso, double altura,
+			double fcm, double fcr, int proveedor) {
+		
+		try {
+			UsuarioDTO dto = new UsuarioDTO();
+			dto.setAltura(altura);
+			dto.setContrasena(contrasena);
+			dto.setEmail(email);
+			dto.setFcm(fcm);
+			dto.setFcr(fcr);
+			dto.setFechaNac(fNac);
+			dto.setNombre(nombre);
+			dto.setPeso(peso);
+			dto.setProveedor(proveedor);
+			this.serviceLocator.getService().registrar(dto);
+		} catch (RemoteException e) {
+			System.out.println("# Error during registration: " + e);
+		}
+		
+	}
+	
+	/*
 	public boolean loginLocal(String email, String contrasena) {
 		try {
 			this.token = this.serviceLocator.getService().loginLocal(email, contrasena);
@@ -111,9 +135,25 @@ public class LogInController {
 		}
 	}
 	
+	*
+	*	CAMBIAMOS TODOS LOS LOGIN POR UNO ÚNICO CONJUNTO:
+	*/
+	
+	public boolean login(String email, String contrasena) {
+		try {
+			this.token = this.serviceLocator.getService().logIn(email, contrasena);
+			return true;
+		} catch (RemoteException e) {
+			System.out.println("# Error during login: " + e);
+			this.token = -1;
+			return false;
+		}
+	}
+	
+	
 	public void logout() {
 		try {
-			this.serviceLocator.getService().logout(token);
+			this.serviceLocator.getService().logout(this.token);
 			this.token = -1;
 		} catch (Exception e) {
 			System.out.println("# Error during logout: " + e);

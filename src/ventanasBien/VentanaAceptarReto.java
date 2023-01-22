@@ -46,7 +46,7 @@ public class VentanaAceptarReto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAceptarReto frame = new VentanaAceptarReto();
+					VentanaAceptarReto frame = new VentanaAceptarReto(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +58,7 @@ public class VentanaAceptarReto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaAceptarReto() {
+	public VentanaAceptarReto(RetoController controller) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -73,7 +73,7 @@ public class VentanaAceptarReto extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController);
 				vmp.setVisible(true);
 				setVisible(false);
 				
@@ -112,66 +112,66 @@ public class VentanaAceptarReto extends JFrame {
 		String [] titulos = {"NOMBRE", "FECHA INICIO", "FECHA FIN", "DISTANCIA", "TIEMPO OBJETIVO", "ESTADO"};
 		modeloTabla.setColumnIdentifiers(titulos);
 		
-		RetoDTO reto0 = new RetoDTO();
-		//reto0.setUsuario(usuario0);
-		//reto0.setSesionEntrenamiento(sesion0);
-		reto0.setNombre("Gran Fondo");
-		reto0.setSfechaIni("13-02-2022");
-		reto0.setSfechaFin("21-03-2022");
-		reto0.setDistancia(300);
-		reto0.setTiempoObjetivo(90);
-//		reto0.setDeporte(DeporteDTO.CICLISMO);
-		reto0.setEstado(false);
-		
-		RetoDTO reto1 = new RetoDTO();
-		//reto1.setUsuario(usuario1);
-		//reto1.setSesionEntrenamiento(sesion1);
-		reto1.setNombre("Carrera (resistencia)");
-		reto1.setSfechaIni("31-05-2022");
-		reto1.setSfechaFin("15-06-2022");
-		reto1.setDistancia(2);
-		reto1.setTiempoObjetivo(60);
-//		reto1.setDeporte(DeporteDTO.RUNNING);
-		reto1.setEstado(true);
-		
-		RetoDTO reto2 = new RetoDTO();
-		//reto2.setUsuario(usuario1);
-		//reto2.setSesionEntrenamiento(sesion1);
-		reto2.setNombre("Carrera (resistencia)");
-		reto2.setSfechaIni("31-05-2022");
-		reto2.setSfechaFin("15-06-2022");
-		reto2.setDistancia(2);
-		reto2.setTiempoObjetivo(60);
-//		reto2.setDeporte(DeporteDTO.RUNNING);
-		reto2.setEstado(false);
-		
-		RetoDTO reto3 = new RetoDTO();
-		//reto3.setUsuario(usuario1);
-		//reto3.setSesionEntrenamiento(sesion1);
-		reto3.setNombre("Carrera (resistencia)");
-		reto3.setSfechaIni("31-05-2022");
-		reto3.setSfechaFin("15-06-2022");
-		reto3.setDistancia(2);
-		reto3.setTiempoObjetivo(60);
-//		reto3.setDeporte(DeporteDTO.RUNNING);
-		reto3.setEstado(true);
-		
-		retos.add(reto0);
-		retos.add(reto1);
-		retos.add(reto2);
-		retos.add(reto3);
-		
-		for(RetoDTO r : retos) {
-			String [] datos = {r.getNombre(), r.getSfechaIni(), r.getSfechaFin(), Float.toString(r.getDistancia()), Float.toString(r.getTiempoObjetivo()), /*r.getDeporte().toString(),*/ Boolean.toString(r.getEstado())};
-			modeloTabla.addRow(datos);
-		}
-		tablaRetos = new JTable(modeloTabla);
-		scrollTabla  = new JScrollPane(tablaRetos);
-		tablaRetos.setBounds(100, 100, 450, 300);
-		panelCentro.add(scrollTabla, BorderLayout.CENTER);
-		
-		panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+//		RetoDTO reto0 = new RetoDTO();
+//		//reto0.setUsuario(usuario0);
+//		//reto0.setSesionEntrenamiento(sesion0);
+//		reto0.setNombre("Gran Fondo");
+//		reto0.setSfechaIni("13-02-2022");
+//		reto0.setSfechaFin("21-03-2022");
+//		reto0.setDistancia(300);
+//		reto0.setTiempoObjetivo(90);
+////		reto0.setDeporte(DeporteDTO.CICLISMO);
+//		reto0.setEstado(false);
+//		
+//		RetoDTO reto1 = new RetoDTO();
+//		//reto1.setUsuario(usuario1);
+//		//reto1.setSesionEntrenamiento(sesion1);
+//		reto1.setNombre("Carrera (resistencia)");
+//		reto1.setSfechaIni("31-05-2022");
+//		reto1.setSfechaFin("15-06-2022");
+//		reto1.setDistancia(2);
+//		reto1.setTiempoObjetivo(60);
+////		reto1.setDeporte(DeporteDTO.RUNNING);
+//		reto1.setEstado(true);
+//		
+//		RetoDTO reto2 = new RetoDTO();
+//		//reto2.setUsuario(usuario1);
+//		//reto2.setSesionEntrenamiento(sesion1);
+//		reto2.setNombre("Carrera (resistencia)");
+//		reto2.setSfechaIni("31-05-2022");
+//		reto2.setSfechaFin("15-06-2022");
+//		reto2.setDistancia(2);
+//		reto2.setTiempoObjetivo(60);
+////		reto2.setDeporte(DeporteDTO.RUNNING);
+//		reto2.setEstado(false);
+//		
+//		RetoDTO reto3 = new RetoDTO();
+//		//reto3.setUsuario(usuario1);
+//		//reto3.setSesionEntrenamiento(sesion1);
+//		reto3.setNombre("Carrera (resistencia)");
+//		reto3.setSfechaIni("31-05-2022");
+//		reto3.setSfechaFin("15-06-2022");
+//		reto3.setDistancia(2);
+//		reto3.setTiempoObjetivo(60);
+////		reto3.setDeporte(DeporteDTO.RUNNING);
+//		reto3.setEstado(true);
+//		
+//		retos.add(reto0);
+//		retos.add(reto1);
+//		retos.add(reto2);
+//		retos.add(reto3);
+//		
+//		for(RetoDTO r : retos) {
+//			String [] datos = {r.getNombre(), r.getSfechaIni(), r.getSfechaFin(), Float.toString(r.getDistancia()), Float.toString(r.getTiempoObjetivo()), /*r.getDeporte().toString(),*/ Boolean.toString(r.getEstado())};
+//			modeloTabla.addRow(datos);
+//		}
+//		tablaRetos = new JTable(modeloTabla);
+//		scrollTabla  = new JScrollPane(tablaRetos);
+//		tablaRetos.setBounds(100, 100, 450, 300);
+//		panelCentro.add(scrollTabla, BorderLayout.CENTER);
+//		
+//		panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//		
 	}
 
 }

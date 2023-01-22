@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import clases.Deporte;
+
 import dto.RetoDTO;
 
 public class RetoController {
@@ -20,10 +20,10 @@ public class RetoController {
 	}
 	
 	public void crearReto(String nombre, Date fechaI, Date fechaF, double distancia, double tiempoObjetivo, 
-			Deporte deporte) {
+			int deporte) {
 		try {
 			RetoDTO dto = new RetoDTO();
-			dto.setDeporte(deporte);
+			dto.setDeporte(Deporte.values()[deporte]);
 			dto.setDistancia(distancia);
 			dto.setFechaFin(fechaF);
 			dto.setFechaIni(fechaI);

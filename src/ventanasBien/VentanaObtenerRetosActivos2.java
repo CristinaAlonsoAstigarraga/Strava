@@ -29,30 +29,29 @@ public class VentanaObtenerRetosActivos2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaObtenerRetosActivos2 frame = new VentanaObtenerRetosActivos2(logInController, controller);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VentanaObtenerRetosActivos2 frame = new VentanaObtenerRetosActivos2(controller);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaObtenerRetosActivos2(LogInController logIncontroller, RetoController controller) {
+	public VentanaObtenerRetosActivos2(RetoController controller) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		
+		setContentPane(contentPane);		
 		
 		
 		JPanel panelNorte = new JPanel();
@@ -61,7 +60,7 @@ public class VentanaObtenerRetosActivos2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController, controller);
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController);
 				vmp.setVisible(true);
 				setVisible(false);
 			}

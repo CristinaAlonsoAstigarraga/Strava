@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+//import clases.UsuarioTipo;
 import controller.LogInController;
 import dto.UsuarioLocalDTO;
 import remote.ServiceLocator;
@@ -30,6 +33,7 @@ public class VentanaRegistro2 extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNombre, textFieldEmail, textFieldPeso, textFieldAltura, textFieldFCM, 
 						textFieldFCR, textFieldContrasena;
+	private JComboBox comboBoxTipo;
 	private LogInController logincontoller;
 	private JDateChooser jdcFechaNac;
 	
@@ -55,10 +59,11 @@ public class VentanaRegistro2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistro2(ServiceLocator servicelocator) {
-		logincontoller = new LogInController(servicelocator);
+	public VentanaRegistro2(LogInController logInController) {
+//		logincontoller = new LogInController(servicelocator);
+		logincontoller = logInController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 475, 300);
+		setBounds(100, 100, 475, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -128,6 +133,18 @@ public class VentanaRegistro2 extends JFrame {
 		panelCentro.add(textFieldFCR);
 		textFieldFCR.setColumns(10);
 		
+		JLabel lblProveedor = new JLabel("PROVEEDOR");
+		panelCentro.add(lblProveedor);
+		
+		comboBoxTipo = new JComboBox<>();
+		String[] s = new String[UsuarioTipo.values().length];
+		int i = 0;
+		for(UsuarioTipo ut : UsuarioTipo.values()) {
+			s[i++] = ut.toString();
+		}
+		comboBoxTipo.setModel(new DefaultComboBoxModel<>(s));
+		panelCentro.add(comboBoxTipo);
+		
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
@@ -145,8 +162,9 @@ public class VentanaRegistro2 extends JFrame {
 				double altura = Double.parseDouble(textFieldAltura.getText());
 				double fcm = Double.parseDouble(textFieldFCM.getText());
 				double fcr = Double.parseDouble(textFieldFCR.getText());
+				int proveedor = comboBoxTipo.getSelectedIndex();
 				
-				logincontoller.registroLocal(nombre, email, contrasena, fNac, peso, altura, fcm, fcr);
+				logincontoller.registro(nombre, email, contrasena, fNac, peso, altura, fcm, fcr, proveedor);
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -168,39 +186,39 @@ public class VentanaRegistro2 extends JFrame {
 		
 		contentPane.add(btnverUsuarios);
 		
-		JButton btnRegistroGoogle = new JButton("REGISTRO GOOGLE");
-		btnRegistroGoogle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String email = textFieldEmail.getText();
-				String nombre = textFieldNombre.getText();
-				Date fNac = jdcFechaNac.getDate();
-				double peso = Double.parseDouble(textFieldPeso.getText());
-				double altura = Double.parseDouble(textFieldAltura.getText());
-				double fcm = Double.parseDouble(textFieldFCM.getText());
-				double fcr = Double.parseDouble(textFieldFCR.getText());
-				
-				logincontoller.registroGoogle(nombre, email, fNac, peso, altura, fcm, fcr);
-				
-			}
-		});
-		panelSur.add(btnRegistroGoogle);
-		
-		JButton btnRegistroFB = new JButton("REGISTRO FACEBOOK");
-		btnRegistroFB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String email = textFieldEmail.getText();
-				String nombre = textFieldNombre.getText();
-				Date fNac = jdcFechaNac.getDate();
-				double peso = Double.parseDouble(textFieldPeso.getText());
-				double altura = Double.parseDouble(textFieldAltura.getText());
-				double fcm = Double.parseDouble(textFieldFCM.getText());
-				double fcr = Double.parseDouble(textFieldFCR.getText());
-				
-				logincontoller.registroFacebook(nombre, email, fNac, peso, altura, fcm, fcr);
-			}
-		});
-		panelSur.add(btnRegistroFB);
+//		JButton btnRegistroGoogle = new JButton("REGISTRO GOOGLE");
+//		btnRegistroGoogle.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				String email = textFieldEmail.getText();
+//				String nombre = textFieldNombre.getText();
+//				Date fNac = jdcFechaNac.getDate();
+//				double peso = Double.parseDouble(textFieldPeso.getText());
+//				double altura = Double.parseDouble(textFieldAltura.getText());
+//				double fcm = Double.parseDouble(textFieldFCM.getText());
+//				double fcr = Double.parseDouble(textFieldFCR.getText());
+//				
+//				logincontoller.registroGoogle(nombre, email, fNac, peso, altura, fcm, fcr);
+//				
+//			}
+//		});
+//		panelSur.add(btnRegistroGoogle);
+//		
+//		JButton btnRegistroFB = new JButton("REGISTRO FACEBOOK");
+//		btnRegistroFB.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String email = textFieldEmail.getText();
+//				String nombre = textFieldNombre.getText();
+//				Date fNac = jdcFechaNac.getDate();
+//				double peso = Double.parseDouble(textFieldPeso.getText());
+//				double altura = Double.parseDouble(textFieldAltura.getText());
+//				double fcm = Double.parseDouble(textFieldFCM.getText());
+//				double fcr = Double.parseDouble(textFieldFCR.getText());
+//				
+//				logincontoller.registroFacebook(nombre, email, fNac, peso, altura, fcm, fcr);
+//			}
+//		});
+//		panelSur.add(btnRegistroFB);
 		
 		JPanel panelOeste = new JPanel();
 		contentPane.add(panelOeste, BorderLayout.WEST);

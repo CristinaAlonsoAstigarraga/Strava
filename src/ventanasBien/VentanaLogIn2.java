@@ -13,11 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.LogInController;
+import controller.RetoController;
 import remote.ServiceLocator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class VentanaLogIn2 extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,22 +28,25 @@ public class VentanaLogIn2 extends JFrame {
 	private JTextField textFieldUsuario;
 	private JPasswordField txtContrasenia;
 	private LogInController logInController;
+	
+	//NECESARI0?
+	private RetoController retoController;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaLogIn2 frame = new VentanaLogIn2(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					VentanaLogIn2 frame = new VentanaLogIn2(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -93,14 +98,15 @@ public class VentanaLogIn2 extends JFrame {
 		
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String email = textFieldUsuario.getText();
 				String contrasena = txtContrasenia.getText(); 
-				if(logInController.loginLocal(email, contrasena)) {
+				if(logInController.login(email, contrasena)) {
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							try {
-								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController);
 								vM.setVisible(true);
 							} catch (Exception e2) {
 								e2.printStackTrace();
@@ -114,61 +120,62 @@ public class VentanaLogIn2 extends JFrame {
 		});
 		panelSur.add(btnIniciarSesion);
 		
-		JButton btnLoginGoogle = new JButton("INICIAR SESIÓN CON GOOGLE");
-		btnLoginGoogle.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String email = textFieldUsuario.getText();
-				if(logInController.loginGoogle(email)) {
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
-								vM.setVisible(true);
-							} catch (Exception e2) {
-								e2.printStackTrace();
-							}
-						}
-					});
-				}else {
-					System.out.println("Error durante loginGoogle!");
-				}
-			}
-		});
-		panelSur.add(btnLoginGoogle);
-		
-		JButton btnLoginFaceBook = new JButton("INICIAR SESIÓN CON FACEBOOK");
-		btnLoginFaceBook.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String email = textFieldUsuario.getText();
-				if(logInController.loginFacebook(email)) {
-					EventQueue.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
-								vM.setVisible(true);
-							} catch (Exception e2) {
-								e2.printStackTrace();
-							}
-							
-						}
-					});
-				}else {
-					System.out.println("Error durante loginFacebook!");
-				}
-			}
-		});
-		panelSur.add(btnLoginFaceBook);
+//		JButton btnLoginGoogle = new JButton("INICIAR SESIÓN CON GOOGLE");
+//		btnLoginGoogle.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String email = textFieldUsuario.getText();
+//				if(logInController.loginGoogle(email)) {
+//					EventQueue.invokeLater(new Runnable() {
+//						public void run() {
+//							try {
+//								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+//								vM.setVisible(true);
+//							} catch (Exception e2) {
+//								e2.printStackTrace();
+//							}
+//						}
+//					});
+//				}else {
+//					System.out.println("Error durante loginGoogle!");
+//				}
+//			}
+//		});
+//		panelSur.add(btnLoginGoogle);
+//		
+//		JButton btnLoginFaceBook = new JButton("INICIAR SESIÓN CON FACEBOOK");
+//		btnLoginFaceBook.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String email = textFieldUsuario.getText();
+//				if(logInController.loginFacebook(email)) {
+//					EventQueue.invokeLater(new Runnable() {
+//						@Override
+//						public void run() {
+//							try {
+//								VentanaMenuPrincipal2 vM = new VentanaMenuPrincipal2(logInController, null);
+//								vM.setVisible(true);
+//							} catch (Exception e2) {
+//								e2.printStackTrace();
+//							}
+//							
+//						}
+//					});
+//				}else {
+//					System.out.println("Error durante loginFacebook!");
+//				}
+//			}
+//		});
+//		panelSur.add(btnLoginFaceBook);
 	
 		JButton btnRegistro = new JButton("REGISTRAR");
 		btnRegistro.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							VentanaRegistro2 vR = new VentanaRegistro2(servicelocator);
+							VentanaRegistro2 vR = new VentanaRegistro2(logInController);
 							vR.setVisible(true);
 						} catch (Exception e2) {
 							e2.printStackTrace();
@@ -178,5 +185,13 @@ public class VentanaLogIn2 extends JFrame {
 			}
 		});
 		panelSur.add(btnRegistro);
+		
+		JButton btnSalir = new JButton("SALIR");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panelSur.add(btnSalir);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import clases.Deporte;
+
 import dto.SesionEntrenamientoDTO;
 import remote.ServiceLocator;
 
@@ -18,10 +18,10 @@ public class SesionEntrenamientoController {
 		this.token = token;
 	}
 	
-	public void crearSesion(String titulo, Deporte deporte, double distancia, Date sFyH, double duracion) {
+	public void crearSesion(String titulo, int deporte, double distancia, Date sFyH, double duracion) {
 		try {
 			SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
-			dto.setDeporte(deporte);
+			dto.setDeporte(Deporte.values()[deporte]);
 			dto.setDistancia(distancia);
 			dto.setDuracion(duracion);
 			dto.setsFyH(sFyH);

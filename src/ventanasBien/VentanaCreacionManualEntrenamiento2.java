@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import clases.Deporte;
+
+import controller.LogInController;
 import controller.SesionEntrenamientoController;
 import dto.SesionEntrenamientoDTO;
 
@@ -29,6 +30,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 	private JTextField textFieldTitulo;
 	private JTextField textFieldDistancia;
 	private JTextField textFieldFechaHoraInicio;
+	private static LogInController logInController;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	private JTextField textFieldDuracion;
 	private JComboBox comboBoxDeporte = new JComboBox<Deporte>();
@@ -70,7 +72,7 @@ public class VentanaCreacionManualEntrenamiento2 extends JFrame {
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(null, null);
+				VentanaMenuPrincipal2 vmp = new VentanaMenuPrincipal2(logInController);
 				vmp.setVisible(true);
 				setVisible(false);
 			}
